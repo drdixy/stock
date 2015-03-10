@@ -1,0 +1,19 @@
+You can get the most recent sources from CVS via anonymous CVS:
+
+  cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/ojts login
+  "" empty password
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/ojts co OpenJavaTradingSystem
+
+change into the newly created directory and type:
+  ant dbcreate
+
+now you can start the database server in one shell:
+  java -cp lib/hsqldb.jar org.hsqldb.Server -database.0 data/jts -dbname.0 jts -port 9002
+
+change to another shell.
+
+you are ready to import the meta class configuration from the testread.xml file:
+  ant configimport
+
+and finally you can now start the acutal program by executing:
+  ant run

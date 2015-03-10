@@ -1,0 +1,6 @@
+download the statcvs program from:
+http://statcvs.sourceforge.net/
+and change the current working directory to this directory.
+Then call statcvs as follows, assuming that you unpacked the statcvs
+program at ~/tmp/statcvs-0.2.2:
+java -jar ~/tmp/statcvs-0.2.2/statcvs.jar ../cvs.log ../

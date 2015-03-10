@@ -1,0 +1,508 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD><TITLE>Open Java Trading System 
+Dokumentation
+</TITLE>
+<LINK REL=StyleSheet TYPE="text/css"  HREF="style.css">
+
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+<META name="GENERATOR" content="hevea 1.07">
+</HEAD>
+<BODY >
+<!--HEVEA command line is: /usr/bin/hevea -fix ojts.tex -->
+<!--HTMLHEAD-->
+<!--ENDHTML-->
+<!--PREFIX <ARG ></ARG>-->
+<!--CUT DEF section 1 -->
+
+
+<H1 ALIGN=center>Open Java Trading System<BR>
+<FONT SIZE=5>Dokumentation
+</FONT></H1>
+
+<H3 ALIGN=center><A HREF="mailto:Christian dot Schuhegger at gmx dot de">Christian Schuhegger</A></H3>
+
+<H3 ALIGN=center>4th December 2004</H3>
+<!--TOC section Table of Contents-->
+
+<H2>Table of Contents</H2><!--SEC END -->
+
+<UL><LI>
+<A HREF="#htoc1">1&nbsp;&nbsp;Java Data Objects</A>
+<UL><LI>
+<A HREF="#htoc2">1.1&nbsp;&nbsp;Meta-Data Classes</A>
+<LI><A HREF="#htoc3">1.2&nbsp;&nbsp;Data Classes</A>
+</UL>
+<LI><A HREF="#htoc4">2&nbsp;&nbsp;Interactive usage</A>
+<UL><LI>
+<A HREF="#htoc5">2.1&nbsp;&nbsp;SISC a Scheme implementation in Java</A>
+<LI><A HREF="#htoc6">2.2&nbsp;&nbsp;Using the ilisp Emacs mode</A>
+<LI><A HREF="#htoc7">2.3&nbsp;&nbsp;Configuring the SQLExplorer plugin for Eclipse</A>
+</UL>
+</UL>
+
+
+
+<!--TOC section Java Data Objects-->
+
+<H2><A NAME="htoc1">1</A>&nbsp;&nbsp;Java Data Objects</H2><!--SEC END -->
+
+In the Java Data Object layer you will find classes that
+serve as the representation of the data and meta-data which is
+used as the basis for later analysis. Because the data is represented
+in different forms, e.g. as java objects, as rows in a database or as
+xml files we use the object relational mapping tool
+<A HREF="http://www.castor.org/">castor</A> to map between the diferent
+representations.<BR>
+<BR>
+<!--TOC subsection Meta-Data Classes-->
+
+<H3><A NAME="htoc2">1.1</A>&nbsp;&nbsp;Meta-Data Classes</H3><!--SEC END -->
+
+In the end we want to be able to do data analysis on the
+market data. We gather the market data via publicly available services
+like yahoo finance or onvista. These services we call observers,
+because they observe the market activities. <BR>
+<BR>
+One given equity which is uniquely identified by its ISIN number is
+traded at several different markets, e.g. the NYSE or the German
+XETRA. Therefore at a given time there is not one single price for a
+given equity, but there are as many prices as there are
+markets. Actually these price differences will be used by arbitraters
+to generate profits.<BR>
+<BR>
+Up to now we have already the concepts ``Observer'', ``MarketPlace'' and
+``Equity'' which we all need to describe. In the meta data layer there
+is therefore a class for every such concept. These classes all derive
+from the general base class <CODE>Subject</CODE>:
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;Subject&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>private</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>private</B>&nbsp;String&nbsp;name;</TT><TT><BR>
+</TT><TT>&nbsp;<B>private</B>&nbsp;String&nbsp;description;</TT><TT><BR>
+</TT><TT>&nbsp;<B>private</B>&nbsp;String&nbsp;urlSources;</TT><TT><BR>
+</TT><TT>}</TT></DIV>The <CODE>name</CODE> uniquely identifies the subject in its category (Observer,
+MarketPlace or Equity). The <CODE>description</CODE> is used to provide some documentation
+about the subject and the <CODE>urlSources</CODE> is a white-space
+separated list of urls to web resources which are relevant for the
+given subject.<BR>
+<BR>
+The derived concepts <CODE>Observer</CODE>, <CODE>MarketPlace</CODE> and
+<CODE>Equity</CODE> currently all do not provide any additional
+information:
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;Observer&nbsp;&nbsp;&nbsp;&nbsp;<B>extends</B>&nbsp;Subject&nbsp;{</TT><TT><BR>
+</TT><TT>}</TT><TT><BR>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;MarketPlace&nbsp;<B>extends</B>&nbsp;Subject&nbsp;{</TT><TT><BR>
+</TT><TT>}</TT><TT><BR>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;Equity&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>extends</B>&nbsp;Subject&nbsp;{</TT><TT><BR>
+</TT><TT>}</TT></DIV><BR>
+Above we said that equities are uniquely identified by their ISIN
+number. But ISIN numbers are not the only means that people use to
+identify equities. In Germany for example there are WKN numbers in
+widespread use or yahoo uses its own yahoo symbols to identify
+securities, companies or indices. In order to be able to find equities
+via these alternative identifiers we introduced the concept of aliases:
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;Alias&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;Subject&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subject;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;AliasType&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;MarketPlace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;market;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alias;</TT><TT><BR>
+</TT><TT>}</TT></DIV>Normally there is an authority that assigns these alternative
+identifiers. These authorities are identified via the
+<CODE>AliasType</CODE> element and we will have a look at them in a
+minute. Sometimes an alias is closely related to a market place that
+uses them and the <CODE>MarketPlace</CODE> element can be used to
+express this close relation. The alias itself is of type
+<CODE>String</CODE> so that it can be used to express anything.<BR>
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;AliasType&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;name;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;Observer&nbsp;observerLink;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;description;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;urlSource;</TT><TT><BR>
+</TT><TT>}</TT></DIV>If there is such a central authority which assigns aliases you will
+have to define the authority as a element of type
+<CODE>Observer</CODE>. The <CODE>description</CODE> and
+<CODE>urlSource</CODE> have similar meanings as in the case of the
+<CODE>Subject</CODE> class.<BR>
+<BR>
+In general elements of type <CODE>Subject</CODE> have more details as
+there were given as properties in the <CODE>Subject</CODE> class. These
+additional properties can be described via the <CODE>Property</CODE>
+class.
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;Property&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;PropertyType&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description;</TT><TT><BR>
+</TT><TT>}</TT></DIV>All properties that express a quantity of similar meaning are of the
+same <CODE>PropertyType</CODE>. You can think of properties of the same
+type as of quantities with the same unit or at least with units that
+can be converted into eachother.
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;PropertyType&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;name;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;description;</TT><TT><BR>
+</TT><TT>}</TT></DIV>As an example we can take the properties ``min-day-price'',
+``max-day-price'', ``opening-price'' and ``closing-price''. All of
+these properties are of the same type ``price''. These quantities do not
+necessarily have the same unit, e.g. sometimes they are expressed in
+&euro; and sometimes they are expressed in $, but you can convert
+from the one to the other.<BR>
+<BR>
+While we are just talking about units. There is also a class that
+describes units:
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;Unit&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;PropertyType&nbsp;propertyTypeLink;</TT><TT><BR>
+</TT><TT>}</TT></DIV>There is a <CODE>propertyTypeLink</CODE> in order to express that all
+units that have the same <CODE>propertyTypeLink</CODE> can be converted
+back and forth to oneanother.<BR>
+<BR>
+In order to configure the data import methods there are classes
+<CODE>DataSource</CODE> and <CODE>DataSourceType</CODE>. The
+<CODE>DataSourceType</CODE> can be seen more or less as a ``mime
+type''. You should be able to read from all data sources with the same
+<CODE>DataSourceType</CODE> with the same data source handler code.
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;DataSourceType&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;name;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;description;</TT><TT><BR>
+</TT><TT>}</TT></DIV>The <CODE>DataSource</CODE> class looks as follows:
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;DataSource&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;DataSourceType&nbsp;&nbsp;type;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;Observer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;observerLink;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;handlerClassName;</TT><TT><BR>
+</TT><TT>}</TT></DIV>The <CODE>url</CODE> element should be seen as a pattern that the
+handler code can use to retrieve actual data for a specific
+equity. The <CODE>observerLink</CODE> tells you which service provides
+the data and the <CODE>handlerClassName</CODE> will be used to create a
+handler class via <FONT COLOR=navy>Java</FONT> reflection.<BR>
+<BR>
+But because the handler class will need more information in order to
+do its job, which it will have to retrieve from the database there is
+an additional configuration class called
+<CODE>ObserverDataSourceConfiguration</CODE>. When the handler is
+called it will use this configuration data to determin which data can
+be found in which position on the retrieved page.
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;ObserverDataSourceConfiguration&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;Property&nbsp;&nbsp;&nbsp;&nbsp;property;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;MarketPlace&nbsp;observedAt;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;DataSource&nbsp;&nbsp;observerDataSource;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;Unit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unit;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;String&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;colu;</TT><TT><BR>
+</TT><TT>}</TT></DIV>The <CODE>property</CODE> tells the handler which property is
+configured via this <CODE>ObserverDataSourceConfiguration</CODE>
+instance. Because a given observer can observe several markets we need
+to tell the handler which market-place we are talking about. The
+handler needs to be informed which unit the property is measured in
+aswell. The String field <CODE>colu</CODE> is there to
+provide additional information to handlers in a free format. The name
+``colu'' reminds of its origin. Initially it was meant to point to
+a column in a csv file format.<BR>
+<BR>
+<!--TOC subsection Data Classes-->
+
+<H3><A NAME="htoc3">1.2</A>&nbsp;&nbsp;Data Classes</H3><!--SEC END -->
+
+All data classes derive from one common base class:
+<DIV ALIGN=left><TT> </TT><TT>
+</TT><TT><B>public</B>&nbsp;<B>class</B>&nbsp;DataItem&nbsp;{</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;<B>int</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id;</TT><TT><BR>
+</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;Subject&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subject;</TT><TT><BR>
+</TT><TT>&nbsp;<B>protected</B>&nbsp;ObserverDataSourceConfiguration&nbsp;source;</TT><TT><BR>
+</TT><TT>}</TT></DIV>The data is actually what we are interested in for our later
+analysis. The data that we collect is a function of time, it belongs
+to a specific subject, it describes a certain aspect/property of that
+subject, it is observed by an observer at a certain market-place and
+finally it has a unit. All the information which is not directly
+present in this class can be retrieved by following the object graph
+in the <CODE>source</CODE> element.<BR>
+<BR>
+There are subclasses of this <CODE>DataItem</CODE> class for the
+concrete data types: Boolean, Double, Int, String and Time.<BR>
+<BR>
+<!--TOC section Interactive usage-->
+
+<H2><A NAME="htoc4">2</A>&nbsp;&nbsp;Interactive usage</H2><!--SEC END -->
+
+<!--TOC subsection SISC a Scheme implementation in Java-->
+
+<H3><A NAME="htoc5">2.1</A>&nbsp;&nbsp;SISC a Scheme implementation in Java</H3><!--SEC END -->
+
+This section is here to give you a preliminary feeling of
+what the project can do for you and where the project is going in the
+future. The project is a pure <FONT COLOR=navy>Java</FONT> project and designed in such a
+way that you can easily integrate its functionality into your own
+applications. For my personal use I prefer to work with the
+<FONT COLOR=navy>OpenJavaTradingSystem</FONT> functionality in an interactive
+way. Therefore I've written some adapter code to be able to call the
+<FONT COLOR=navy>OpenJavaTradingSystem</FONT> functionality from
+<A HREF="http://sisc.sourceforge.net/">SISC</A>, a pure <FONT COLOR=navy>Java</FONT>
+implementation of the algorithmic programming language
+<FONT COLOR=navy>Scheme</FONT><SUP><A NAME="text1" HREF="#note1">1</A></SUP>. 
+Other types of integration, e.g. into
+<A HREF="http://www.jython.org/">Jython</A> or
+<A HREF="http://www.beanshell.org/">BeanShell</A> seem to be other options.<BR>
+<BR>
+The following explanations assume that you are in the
+<FONT COLOR=navy>OpenJavaTradingSystem</FONT> project directory.<BR>
+<BR>
+The first step before you can start to work with the
+<FONT COLOR=navy>OpenJavaTradingSystem</FONT> is to start the database server in the
+backgroud:
+<PRE>
+&gt; java -cp lib/hsqldb.jar org.hsqldb.Server -database.0 data/jts -dbname.0 jts
+</PRE>Basically this step is optional if you change the ``jdbc_location''
+property in the <TT>conf/jts.properties</TT> configuration
+file to use the ``:file:'' access method. The advantage of using the
+database server is that you can connect to it from several clients,
+whereas if you choose to use the ``:file:'' access method only the
+<FONT COLOR=navy>OpenJavaTradingSystem</FONT> application is able to access it.<BR>
+<BR>
+In the project root directory you will find a modified startup
+script<SUP><A NAME="text2" HREF="#note2">2</A></SUP> to start SISC. There is an ant task <TT>sisc-repl</TT> aswell, which
+you can use to start the read-eval-print loop. Now you can work
+interactively with the system. Let's start with the initialization
+procedure. One day this initialization procedure will be integrated
+into the bash startup script, but until then you have to initialize
+the system as follows:
+
+<PRE>
+&gt; (current-directory (getenv "sisc.home"))
+&gt; (load "sisc/functionality.scm")
+&gt; (ojts:init)
+</PRE>If you start the system for the first time you also have to initialize
+the content of some database tables from an xml file:
+<PRE>
+&gt; (ojts:read-xml-configuration "testread.xml")
+</PRE>From here on you can start retrieving data from the internet or
+displaying data in a graph. All of the following commands are
+independent and can be executed<SUP><A NAME="text3" HREF="#note3">3</A></SUP> one by one without the
+others:
+<PRE>
+&gt; (ojts:fetch-data "yahoo-csv" "2004-06-01" "2004-08-23" 
+                   "DE0007500001" "XETRA")
+&gt; (ojts:fetch-data "yahoo-csv" "2004-06-01" '() 
+                   "DE0007500001" "XETRA")
+
+&gt; (ojts:get-ohlc-for-equity "yahoo-csv" "2004-06-01" "2004-07-01" 
+                            "DE0007500001" "XETRA")
+&gt; (ojts:get-data-for-equity "yahoo-csv" "2004-06-01" "2004-07-01" 
+                            "DE0007500001" "XETRA" *CLOSING-DAY-PRICE*)
+&gt; (ojts:get-data-for-equity "yahoo-csv" "2004-06-01" "2004-07-01" 
+                            "DE0007500001" "XETRA" *TRADING-DAY-VOLUME*)
+  
+&gt; (ojts:display-chart 
+   (ojts:create-candlestick-chart-for-equity 
+     "yahoo-csv" "2004-06-01" "2004-07-01" "DE0007500001" "XETRA"))
+</PRE>All operations that require data will try to find that data in the
+database. If the data cannot be found the system will try to get
+the data from the web. This action is the same as what happens when
+you execute the <BLOCKQUOTE><TT>ojts:fetch-data</TT></BLOCKQUOTE> statement. Here you can
+see the result for one of the
+<BLOCKQUOTE><TT>ojts:get-data-for-equity</TT></BLOCKQUOTE> operations from above:
+<PRE>
+&gt; (ojts:get-data-for-equity "yahoo-csv" "2004-06-01" "2004-07-01" 
+                            "DE0007500001" "XETRA" *TRADING-DAY-VOLUME*)
+INFO - Was fetching data for 0 days therefore no commits are necessary.
+(("2004-06-01" "integer" 1267190.0)
+ ("2004-06-02" "integer" 2241070.0)
+ ("2004-06-03" "integer" 1953370.0)
+ ("2004-06-04" "integer" 2015380.0)
+ ("2004-06-07" "integer" 1953470.0)
+ ("2004-06-08" "integer" 1487590.0)
+ ("2004-06-09" "integer" 3193410.0)
+ ("2004-06-10" "integer" 1641250.0)
+ ("2004-06-11" "integer" 1635660.0)
+ ("2004-06-14" "integer" 2541210.0)
+ ("2004-06-15" "integer" 2598440.0)
+ ("2004-06-16" "integer" 1913340.0)
+ ("2004-06-17" "integer" 2303420.0)
+ ("2004-06-18" "integer" 3802480.0)
+ ("2004-06-21" "integer" 2514830.0)
+ ("2004-06-22" "integer" 1499570.0)
+ ("2004-06-23" "integer" 2305450.0)
+ ("2004-06-24" "integer" 4740060.0)
+ ("2004-06-25" "integer" 2459800.0)
+ ("2004-06-28" "integer" 2783660.0)
+ ("2004-06-29" "integer" 2555130.0)
+ ("2004-06-30" "integer" 4322920.0)
+ ("2004-07-01" "integer" 4587870.0))
+</PRE>And in figure&nbsp;<A HREF="#sample-candlestick">1</A> you can see the output
+of the following chart creating command:
+<PRE>
+&gt; (ojts:display-chart 
+   (ojts:create-candlestick-chart-for-equity 
+     "yahoo-csv" "2004-06-01" "2004-07-01" "DE0007500001" "XETRA"))
+</PRE><BLOCKQUOTE>
+<BR>
+<DIV ALIGN=center>Figure 1: Sample Candlestick Chart</DIV><BR>
+
+<A NAME="sample-candlestick"></A>
+<A HREF="graphics/ojts-candlestick-chart.png"><DIV ALIGN=center><IMG SRC="ojts001.png"></DIV></A>
+</BLOCKQUOTE>
+<!--TOC subsection Using the ilisp Emacs mode-->
+
+<H3><A NAME="htoc6">2.2</A>&nbsp;&nbsp;Using the ilisp Emacs mode</H3><!--SEC END -->
+
+Normally you won't work with the <FONT COLOR=navy>Scheme</FONT> interpreter on
+the commandline. Usually one uses a more convenient environment like
+the <A HREF="http://sourceforge.net/projects/ilisp/">ilisp</A> emacs
+mode. If you are on a unix system probably you can get a package for
+your package system to install ilisp. If you are on windows you can
+follow the installation procedure described at
+<A HREF="http://cl-cookbook.sourceforge.net/windows.html">Setting up an
+IDE with Emacs on Windows</A>.<BR>
+<BR>
+As soon as you have a working ilisp mode you have to add the following
+section to your .emacs file in order to make ilisp work together with
+SISC:
+<PRE>
+(setq ilisp-*use-fsf-compliant-keybindings* nil)
+
+(add-hook 'ilisp-load-hook
+          '(lambda ()
+      (defdialect sisc "SISC Scheme"
+        scheme
+        (setq ilisp-program "~/workspace/OpenJavaTradingSystem/sisc-ilisp.sh") ; assume scheme is in path.
+        (setq comint-prompt-regexp "^&gt; ")
+        (setq ilisp-eval-command
+       "(car (list (eval (read (open-input-string \"%s\"))) \"%s\" \"%s\"))"
+       ilisp-package-command "%s"
+       ilisp-macroexpand-command "(expand '%s);%s"
+       ilisp-trace-command "(trace %s);%s"
+       ilisp-untrace-command "(untrace %s);%s"
+       ilisp-directory-command  "(current-directory);%s"
+       ilisp-set-directory-command "(current-directory \"%s\")"
+       ilisp-describe-command "(describe %s)"
+       comint-ptyp t
+       comint-always-scroll t
+       ilisp-last-command "*"
+       ))))
+        
+
+(set-default 'auto-mode-alist
+             (append '(("\\.scm$"  . scheme-mode)
+         ("\\.sisc$" . scheme-mode))
+                     auto-mode-alist))
+
+(setq scheme-mode-hook '(lambda () (require 'ilisp)))
+</PRE>You have to adapt the ilisp-program line to suite your set-up. <BR>
+<BR>
+Now you are ready to use the <FONT COLOR=navy>Scheme</FONT> interface to the
+<FONT COLOR=navy>OpenJavaTradingSystem</FONT> from within the ilisp emacs mode. In emacs
+use <BLOCKQUOTE><TT>M-x run-ilisp</TT></BLOCKQUOTE> and when you're asked for the
+``Dialect'' answer with ``sisc''. This should startup the <FONT COLOR=navy>Scheme</FONT>
+interpreter in your emacs window.<BR>
+<BR>
+Details about the usage of the ilisp emacs mode can be found in its
+<A HREF="http://www.xemacs.org/Documentation/packages/html/ilisp.html">manual</A>.<BR>
+<BR>
+And finally in figure&nbsp;<A HREF="#emacs-ilisp-sisc">2</A> is a screenshot of using
+the <FONT COLOR=navy>OpenJavaTradingSystem</FONT> via the <FONT COLOR=navy>Scheme</FONT> interface from within emacs.
+<BLOCKQUOTE>
+<BR>
+<DIV ALIGN=center>Figure 2: Emacs -- Ilisp -- SISC</DIV><BR>
+
+<A NAME="emacs-ilisp-sisc"></A>
+<A HREF="graphics/emacs-ilisp-sisc.png"><DIV ALIGN=center><IMG SRC="ojts002.png"></DIV></A>
+</BLOCKQUOTE>
+<!--TOC subsection Configuring the SQLExplorer plugin for Eclipse-->
+
+<H3><A NAME="htoc7">2.3</A>&nbsp;&nbsp;Configuring the SQLExplorer plugin for Eclipse</H3><!--SEC END -->
+
+As mentioned above, the advantage of starting the database
+server instead of using the ``:file:'' access method is that you can
+connect to the database via the network with other programs aswell. I
+personally have started to use the
+<A HREF="https://sqlexplorer.dev.java.net/">SQLExplorer</A> plugin for the
+Eclipse IDE. The packed distribution can be found on their website
+under ``Documents &amp; files''. In order to install it you only have to
+unpack the distribution into the Eclipse directory. <BR>
+<BR>
+After a restart of Eclipse you will have to open the SQLExplorer
+perspective. At the left top in the ``Drivers'' tab you have to
+configure the ``HSQLDB Server'' by clicking on it with the right mouse
+button and selecting ``Change the selected Driver''. Look at the
+screen shot in figure&nbsp;<A HREF="#sqlexplorer-hsqldb-driver">3</A> to see how you should
+configure these fields. 
+<BLOCKQUOTE>
+<BR>
+<DIV ALIGN=center>Figure 3: SQLExplorer HSQLDB driver configuration</DIV><BR>
+
+<A NAME="sqlexplorer-hsqldb-driver"></A>
+<A HREF="graphics/sqlexplorer-hsqldb-driver.png"><DIV ALIGN=center><IMG SRC="ojts003.png"></DIV></A>
+</BLOCKQUOTE>
+After adding the right jar file you have to click the ``List Drivers''
+button and select the hsqldb JDBC driver as you can see in the screen
+shot.<BR>
+<BR>
+The next step is to configure in the ``Aliases'' tab an alias for your
+database. In screen shot&nbsp;<A HREF="#sqlexplorer-hsqldb-alias">4</A> you can see
+what to put there.
+<BLOCKQUOTE>
+<BR>
+<DIV ALIGN=center>Figure 4: SQLExplorer HSQLDB alias configuration</DIV><BR>
+
+<A NAME="sqlexplorer-hsqldb-alias"></A>
+<A HREF="graphics/sqlexplorer-hsqldb-alias.png"><DIV ALIGN=center><IMG SRC="ojts004.png"></DIV></A>
+</BLOCKQUOTE>
+Now you are ready to connect to the database (make sure the server is
+running) via the ``Connections'' tab at the left bottom. As soon as
+you are connected you will see the ``Database Structure View''
+tab. Use this view to browse through the available tables in the
+database. <BR>
+<BR>
+As next step you can click with your right mouse button on a table
+name and use ``Generate Select in SQL Editor'' to open a prefilled SQL
+Editor tab. From here on you should be able to find yourself your way
+through the functionality of this plugin.<BR>
+<BR>
+<!--BEGIN NOTES document-->
+<HR WIDTH="50%" SIZE=1><DL><DT><A NAME="note1" HREF="#text1"><FONT SIZE=5>1</FONT></A><DD>A good first introduction can be found at
+ <A HREF="http://www.ccs.neu.edu/home/dorai/t-y-scheme/t-y-scheme.html">Teach Yourself Scheme in Fixnum Days</A>
+<DT><A NAME="note2" HREF="#text2"><FONT SIZE=5>2</FONT></A><DD>At the moment there is no equivalent windows script
+available, but I would be happy to integrate one if you can provide me
+one.
+<DT><A NAME="note3" HREF="#text3"><FONT SIZE=5>3</FONT></A><DD>For those who do not know
+<FONT COLOR=navy>Scheme</FONT> one remark: The indentation and newlines are optional. You
+can execute every command on a single line.
+</DL>
+<!--END NOTES-->
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<HR SIZE=2>
+<BLOCKQUOTE><EM>This document was translated from L<sup>A</sup>T<sub>E</sub>X by
+</EM><A HREF="http://pauillac.inria.fr/~maranget/hevea/index.html"><EM>H<FONT SIZE=2><sup>E</sup></FONT>V<FONT SIZE=2><sup>E</sup></FONT>A</EM></A><EM>.
+</EM></BLOCKQUOTE>
+</BODY>
+</HTML>

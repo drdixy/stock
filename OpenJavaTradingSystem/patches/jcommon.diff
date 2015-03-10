@@ -1,0 +1,1180 @@
+diff -rcNbB -x CVS jcommon-orig/ant/build.properties jcommon/ant/build.properties
+*** jcommon-orig/ant/build.properties	2004-10-06 23:44:38.000000000 +0200
+--- jcommon/ant/build.properties	2004-11-16 09:48:00.000000000 +0100
+***************
+*** 14,20 ****
+  
+  #
+  # Make sure that JDK 1.2 compatible class files are generated
+! build.target=1.2
+  
+  #
+  # All path settings are relative to the project root directory
+--- 14,20 ----
+  
+  #
+  # Make sure that JDK 1.2 compatible class files are generated
+! build.target=1.4
+  
+  #
+  # All path settings are relative to the project root directory
+diff -rcNbB -x CVS jcommon-orig/ant/build.xml jcommon/ant/build.xml
+*** jcommon-orig/ant/build.xml	2004-10-06 23:44:38.000000000 +0200
+--- jcommon/ant/build.xml	2004-11-16 09:50:53.000000000 +0100
+***************
+*** 47,53 ****
+          <javac srcdir="source"
+                 destdir="${builddir}"
+                 deprecation="${build.deprecation}" debug="${build.debug}"
+!                optimize="${build.optimize}" target="${build.target}">
+              <classpath refid="build.classpath" />
+              <include name="org/jfree/*"/>
+              <include name="org/jfree/base/**"/>
+--- 47,53 ----
+          <javac srcdir="source"
+                 destdir="${builddir}"
+                 deprecation="${build.deprecation}" debug="${build.debug}"
+!                optimize="${build.optimize}" target="${build.target}" source="${build.target}">
+              <classpath refid="build.classpath" />
+              <include name="org/jfree/*"/>
+              <include name="org/jfree/base/**"/>
+diff -rcNbB -x CVS jcommon-orig/bin/com/keypoint/package.html jcommon/bin/com/keypoint/package.html
+*** jcommon-orig/bin/com/keypoint/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/com/keypoint/package.html	2004-07-15 16:48:39.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ A package containing the PNG encoder written by J. David Eisenberg.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/com/keypoint/PngEncoder.class and jcommon/bin/com/keypoint/PngEncoder.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/AbstractBoot.class and jcommon/bin/org/jfree/base/AbstractBoot.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/BaseBoot.class and jcommon/bin/org/jfree/base/BaseBoot.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/BasicProjectInfo.class and jcommon/bin/org/jfree/base/BasicProjectInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/BootableProjectInfo.class and jcommon/bin/org/jfree/base/BootableProjectInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/config/ConfigBackend.class and jcommon/bin/org/jfree/base/config/ConfigBackend.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/config/HierarchicalConfiguration.class and jcommon/bin/org/jfree/base/config/HierarchicalConfiguration.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/config/ModifiableConfiguration.class and jcommon/bin/org/jfree/base/config/ModifiableConfiguration.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/config/PropertyFileConfiguration.class and jcommon/bin/org/jfree/base/config/PropertyFileConfiguration.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/config/SystemPropertyConfiguration.class and jcommon/bin/org/jfree/base/config/SystemPropertyConfiguration.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/base/jcommon.properties jcommon/bin/org/jfree/base/jcommon.properties
+*** jcommon-orig/bin/org/jfree/base/jcommon.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/base/jcommon.properties	2004-07-15 16:51:18.000000000 +0200
+***************
+*** 0 ****
+--- 1,14 ----
++ #
++ # The minimum loglevel that is logged
++ org.jfree.base.LogLevel=Debug
++ 
++ 
++ #
++ # Where to log. Give a classname of a  valid LogTarget implementation.
++ org.jfree.base.LogTarget=org.jfree.util.PrintStreamLogTarget
++ 
++ #
++ # Should the debugging system be disabled by default. This option will surpress all
++ # output, no single line of debug information will be printed. If you want to remove
++ # System.out-debugging on the server side, try to switch to a Log4J-LogTarget instead.
++ org.jfree.base.NoDefaultDebug=false
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/Library.class and jcommon/bin/org/jfree/base/Library.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/log/DefaultLog.class and jcommon/bin/org/jfree/base/log/DefaultLog.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/log/DefaultLogModule.class and jcommon/bin/org/jfree/base/log/DefaultLogModule.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/log/LogConfiguration.class and jcommon/bin/org/jfree/base/log/LogConfiguration.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/log/MemoryUsageMessage.class and jcommon/bin/org/jfree/base/log/MemoryUsageMessage.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/base/log/module.properties jcommon/bin/org/jfree/base/log/module.properties
+*** jcommon-orig/bin/org/jfree/base/log/module.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/base/log/module.properties	2004-07-15 16:53:53.000000000 +0200
+***************
+*** 0 ****
+--- 1,14 ----
++ #
++ # Support for logging.
++ #
++ 
++ module-info:
++   name: base-logging-module
++   producer: The JFreeChart project - www.jfree.org/jcommon
++   description: Initialializer to configure the log system and to provide
++                a facility for logging to the System.out stream.
++   version.major: 0
++   version.minor: 9
++   version.patchlevel: 4
++   subsystem: logging
++ 
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/log/PadMessage.class and jcommon/bin/org/jfree/base/log/PadMessage.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/AbstractModule.class and jcommon/bin/org/jfree/base/modules/AbstractModule.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/AbstractModule$ReaderHelper.class and jcommon/bin/org/jfree/base/modules/AbstractModule$ReaderHelper.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/DefaultModuleInfo.class and jcommon/bin/org/jfree/base/modules/DefaultModuleInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/Module.class and jcommon/bin/org/jfree/base/modules/Module.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/ModuleInfo.class and jcommon/bin/org/jfree/base/modules/ModuleInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/ModuleInitializeException.class and jcommon/bin/org/jfree/base/modules/ModuleInitializeException.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/ModuleInitializer.class and jcommon/bin/org/jfree/base/modules/ModuleInitializer.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/base/modules/package.html jcommon/bin/org/jfree/base/modules/package.html
+*** jcommon-orig/bin/org/jfree/base/modules/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/base/modules/package.html	2004-07-15 16:54:46.000000000 +0200
+***************
+*** 0 ****
+--- 1,18 ----
++ <html>
++ <body>
++ Module definitions:
++ <p>
++ By default the JFreeReport base package and JCommon are included.
++ Additionally the J2SDK package exists in the system by default.
++ A module that requires a specific java version should create a
++ dependency to the module "J2SDK" and set the required version
++ numbers.
++ <p>
++ Known modules:
++ org.jfree.report.modules.output.csv.CSVModule
++ org.jfree.report.modules.output.xml.XMLModule
++ org.jfree.report.modules.output.base.OutputBaseModule
++ org.jfree.report.modules.output.csv.CSVModule
++ 
++ </body>
++ </html>
+\ Kein Zeilenumbruch am Dateiende.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/PackageManager.class and jcommon/bin/org/jfree/base/modules/PackageManager.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/PackageManager$PackageConfiguration.class and jcommon/bin/org/jfree/base/modules/PackageManager$PackageConfiguration.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/PackageSorter.class and jcommon/bin/org/jfree/base/modules/PackageSorter.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/PackageSorter$SortModule.class and jcommon/bin/org/jfree/base/modules/PackageSorter$SortModule.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/PackageState.class and jcommon/bin/org/jfree/base/modules/PackageState.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/base/modules/SubSystem.class and jcommon/bin/org/jfree/base/modules/SubSystem.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/AnnualDateRule.class and jcommon/bin/org/jfree/date/AnnualDateRule.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/DateUtilities.class and jcommon/bin/org/jfree/date/DateUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/DayAndMonthRule.class and jcommon/bin/org/jfree/date/DayAndMonthRule.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/DayOfWeekInMonthRule.class and jcommon/bin/org/jfree/date/DayOfWeekInMonthRule.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/EasterSundayRule.class and jcommon/bin/org/jfree/date/EasterSundayRule.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/junit/DatePackageTests.class and jcommon/bin/org/jfree/date/junit/DatePackageTests.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/date/junit/package.html jcommon/bin/org/jfree/date/junit/package.html
+*** jcommon-orig/bin/org/jfree/date/junit/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/date/junit/package.html	2004-07-15 17:16:29.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Test cases for the classes in com.jrefinery.date.*.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/junit/SerialDateTests.class and jcommon/bin/org/jfree/date/junit/SerialDateTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/junit/SerialDateUtilitiesTests.class and jcommon/bin/org/jfree/date/junit/SerialDateUtilitiesTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/junit/SpreadsheetDateTests.class and jcommon/bin/org/jfree/date/junit/SpreadsheetDateTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/MonthConstants.class and jcommon/bin/org/jfree/date/MonthConstants.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/date/package.html jcommon/bin/org/jfree/date/package.html
+*** jcommon-orig/bin/org/jfree/date/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/date/package.html	2004-07-15 17:15:57.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Date classes.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/RelativeDayOfWeekRule.class and jcommon/bin/org/jfree/date/RelativeDayOfWeekRule.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/SerialDate.class and jcommon/bin/org/jfree/date/SerialDate.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/SerialDateUtilities.class and jcommon/bin/org/jfree/date/SerialDateUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/date/SpreadsheetDate.class and jcommon/bin/org/jfree/date/SpreadsheetDate.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/demo/DrawStringDemo.class and jcommon/bin/org/jfree/demo/DrawStringDemo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/demo/DrawStringPanel.class and jcommon/bin/org/jfree/demo/DrawStringPanel.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/demo/package.html jcommon/bin/org/jfree/demo/package.html
+*** jcommon-orig/bin/org/jfree/demo/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/demo/package.html	2004-07-15 17:25:01.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Demo code for the JCommon class library.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/demo/TextBlockDemo.class and jcommon/bin/org/jfree/demo/TextBlockDemo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/demo/TextBlockPanel.class and jcommon/bin/org/jfree/demo/TextBlockPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/io/FileUtilities.class and jcommon/bin/org/jfree/io/FileUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/io/IOUtils.class and jcommon/bin/org/jfree/io/IOUtils.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/io/junit/IOPackageTests.class and jcommon/bin/org/jfree/io/junit/IOPackageTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/io/junit/IOUtilsTests.class and jcommon/bin/org/jfree/io/junit/IOUtilsTests.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/io/junit/package.html jcommon/bin/org/jfree/io/junit/package.html
+*** jcommon-orig/bin/org/jfree/io/junit/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/io/junit/package.html	2004-07-15 17:24:40.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ JUnit tests for the org.jfree.io package.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/io/junit/SerialUtilitiesTests.class and jcommon/bin/org/jfree/io/junit/SerialUtilitiesTests.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/io/package.html jcommon/bin/org/jfree/io/package.html
+*** jcommon-orig/bin/org/jfree/io/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/io/package.html	2004-07-15 17:22:51.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Input/output related classes.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/io/SerialUtilities.class and jcommon/bin/org/jfree/io/SerialUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/JCommon.class and jcommon/bin/org/jfree/JCommon.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/JCommonInfo.class and jcommon/bin/org/jfree/JCommonInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/junit/JavaTestSuite.class and jcommon/bin/org/jfree/junit/JavaTestSuite.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/junit/JCommonTestSuite.class and jcommon/bin/org/jfree/junit/JCommonTestSuite.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/junit/package.html jcommon/bin/org/jfree/junit/package.html
+*** jcommon-orig/bin/org/jfree/junit/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/junit/package.html	2004-07-15 17:27:18.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ JUnit tests for the JCommon class library.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/junit/PaintTests.class and jcommon/bin/org/jfree/junit/PaintTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/junit/StrokeTests.class and jcommon/bin/org/jfree/junit/StrokeTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/layout/CenterLayout.class and jcommon/bin/org/jfree/layout/CenterLayout.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/layout/FormatLayout.class and jcommon/bin/org/jfree/layout/FormatLayout.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/layout/LCBLayout.class and jcommon/bin/org/jfree/layout/LCBLayout.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/layout/package.html jcommon/bin/org/jfree/layout/package.html
+*** jcommon-orig/bin/org/jfree/layout/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/layout/package.html	2004-07-15 17:19:53.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Custom layout managers.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/layout/RadialLayout.class and jcommon/bin/org/jfree/layout/RadialLayout.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/package.html jcommon/bin/org/jfree/package.html
+*** jcommon-orig/bin/org/jfree/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/package.html	2004-07-15 17:21:15.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ The root package for the JCommon class library.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/resources/JCommonResources.class and jcommon/bin/org/jfree/resources/JCommonResources.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/resources/package.html jcommon/bin/org/jfree/resources/package.html
+*** jcommon-orig/bin/org/jfree/resources/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/resources/package.html	2004-07-15 17:19:13.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ General localised resources for the JCommon class library.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/G2TextMeasurer.class and jcommon/bin/org/jfree/text/G2TextMeasurer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/junit/TextBlockAnchorTests.class and jcommon/bin/org/jfree/text/junit/TextBlockAnchorTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/junit/TextBlockTests.class and jcommon/bin/org/jfree/text/junit/TextBlockTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/junit/TextBoxTests.class and jcommon/bin/org/jfree/text/junit/TextBoxTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/junit/TextFragmentTests.class and jcommon/bin/org/jfree/text/junit/TextFragmentTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/junit/TextLineTests.class and jcommon/bin/org/jfree/text/junit/TextLineTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/junit/TextPackageTests.class and jcommon/bin/org/jfree/text/junit/TextPackageTests.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/text/package.html jcommon/bin/org/jfree/text/package.html
+*** jcommon-orig/bin/org/jfree/text/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/text/package.html	2004-07-15 17:17:36.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Utility classes relating to text.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/TextBlockAnchor.class and jcommon/bin/org/jfree/text/TextBlockAnchor.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/TextBlock.class and jcommon/bin/org/jfree/text/TextBlock.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/TextBox.class and jcommon/bin/org/jfree/text/TextBox.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/TextFragment.class and jcommon/bin/org/jfree/text/TextFragment.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/TextLine.class and jcommon/bin/org/jfree/text/TextLine.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/TextMeasurer.class and jcommon/bin/org/jfree/text/TextMeasurer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/text/TextUtilities.class and jcommon/bin/org/jfree/text/TextUtilities.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/threads/package.html jcommon/bin/org/jfree/threads/package.html
+*** jcommon-orig/bin/org/jfree/threads/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/threads/package.html	2004-07-15 17:18:49.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Additional support for multi-threaded programs.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/threads/ReaderWriterLock.class and jcommon/bin/org/jfree/threads/ReaderWriterLock.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/threads/ReaderWriterLock$ReaderWriterNode.class and jcommon/bin/org/jfree/threads/ReaderWriterLock$ReaderWriterNode.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/AboutFrame.class and jcommon/bin/org/jfree/ui/about/AboutFrame.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/AboutPanel.class and jcommon/bin/org/jfree/ui/about/AboutPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/Contributor.class and jcommon/bin/org/jfree/ui/about/Contributor.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/ContributorsPanel.class and jcommon/bin/org/jfree/ui/about/ContributorsPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/ContributorsTableModel.class and jcommon/bin/org/jfree/ui/about/ContributorsTableModel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/Library.class and jcommon/bin/org/jfree/ui/about/Library.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/LibraryPanel.class and jcommon/bin/org/jfree/ui/about/LibraryPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/LibraryTableModel.class and jcommon/bin/org/jfree/ui/about/LibraryTableModel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/Licences.class and jcommon/bin/org/jfree/ui/about/Licences.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/ui/about/package.html jcommon/bin/org/jfree/ui/about/package.html
+*** jcommon-orig/bin/org/jfree/ui/about/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/ui/about/package.html	2004-07-15 17:11:27.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Classes for providing information about an application.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/ProjectInfo.class and jcommon/bin/org/jfree/ui/about/ProjectInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/resources/AboutResources.class and jcommon/bin/org/jfree/ui/about/resources/AboutResources.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/resources/AboutResources_de.class and jcommon/bin/org/jfree/ui/about/resources/AboutResources_de.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/resources/AboutResources_es.class and jcommon/bin/org/jfree/ui/about/resources/AboutResources_es.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/resources/AboutResources_fr.class and jcommon/bin/org/jfree/ui/about/resources/AboutResources_fr.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/resources/AboutResources_pl.class and jcommon/bin/org/jfree/ui/about/resources/AboutResources_pl.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/ui/about/resources/package.html jcommon/bin/org/jfree/ui/about/resources/package.html
+*** jcommon-orig/bin/org/jfree/ui/about/resources/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/ui/about/resources/package.html	2004-07-15 17:12:20.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Resource bundles for items that require localisation.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/SystemProperties.class and jcommon/bin/org/jfree/ui/about/SystemProperties.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/SystemPropertiesFrame.class and jcommon/bin/org/jfree/ui/about/SystemPropertiesFrame.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/SystemPropertiesPanel$1.class and jcommon/bin/org/jfree/ui/about/SystemPropertiesPanel$1.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/SystemPropertiesPanel.class and jcommon/bin/org/jfree/ui/about/SystemPropertiesPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/SystemPropertiesPanel$PopupListener.class and jcommon/bin/org/jfree/ui/about/SystemPropertiesPanel$PopupListener.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/SystemPropertiesTableModel.class and jcommon/bin/org/jfree/ui/about/SystemPropertiesTableModel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/SystemPropertiesTableModel$SystemProperty.class and jcommon/bin/org/jfree/ui/about/SystemPropertiesTableModel$SystemProperty.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/about/SystemPropertiesTableModel$SystemPropertyComparator.class and jcommon/bin/org/jfree/ui/about/SystemPropertiesTableModel$SystemPropertyComparator.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/AbstractActionDowngrade.class and jcommon/bin/org/jfree/ui/action/AbstractActionDowngrade.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/ActionButton$ActionEnablePropertyChangeHandler.class and jcommon/bin/org/jfree/ui/action/ActionButton$ActionEnablePropertyChangeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/ActionButton.class and jcommon/bin/org/jfree/ui/action/ActionButton.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/ActionConcentrator.class and jcommon/bin/org/jfree/ui/action/ActionConcentrator.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/ActionDowngrade.class and jcommon/bin/org/jfree/ui/action/ActionDowngrade.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/ActionMenuItem$ActionEnablePropertyChangeHandler.class and jcommon/bin/org/jfree/ui/action/ActionMenuItem$ActionEnablePropertyChangeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/ActionMenuItem.class and jcommon/bin/org/jfree/ui/action/ActionMenuItem.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/ActionRadioButton$ActionEnablePropertyChangeHandler.class and jcommon/bin/org/jfree/ui/action/ActionRadioButton$ActionEnablePropertyChangeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/ActionRadioButton.class and jcommon/bin/org/jfree/ui/action/ActionRadioButton.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/action/DowngradeActionMap.class and jcommon/bin/org/jfree/ui/action/DowngradeActionMap.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/Align.class and jcommon/bin/org/jfree/ui/Align.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/ApplicationFrame.class and jcommon/bin/org/jfree/ui/ApplicationFrame.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/ArrowPanel.class and jcommon/bin/org/jfree/ui/ArrowPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/BevelArrowIcon.class and jcommon/bin/org/jfree/ui/BevelArrowIcon.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/BoundsAnchor.class and jcommon/bin/org/jfree/ui/BoundsAnchor.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/DateCellRenderer.class and jcommon/bin/org/jfree/ui/DateCellRenderer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/DateChooserPanel.class and jcommon/bin/org/jfree/ui/DateChooserPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/Drawable.class and jcommon/bin/org/jfree/ui/Drawable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/ExtensionFileFilter.class and jcommon/bin/org/jfree/ui/ExtensionFileFilter.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/FilesystemFilter.class and jcommon/bin/org/jfree/ui/FilesystemFilter.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/FloatDimension.class and jcommon/bin/org/jfree/ui/FloatDimension.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/FloatingButtonEnabler.class and jcommon/bin/org/jfree/ui/FloatingButtonEnabler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/FontChooserDialog.class and jcommon/bin/org/jfree/ui/FontChooserDialog.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/FontChooserPanel.class and jcommon/bin/org/jfree/ui/FontChooserPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/FontDisplayField.class and jcommon/bin/org/jfree/ui/FontDisplayField.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/GradientPaintTransformer.class and jcommon/bin/org/jfree/ui/GradientPaintTransformer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/GradientPaintTransformType.class and jcommon/bin/org/jfree/ui/GradientPaintTransformType.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/HorizontalAlignment.class and jcommon/bin/org/jfree/ui/HorizontalAlignment.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/InsetsChooserPanel.class and jcommon/bin/org/jfree/ui/InsetsChooserPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/InsetsTextField.class and jcommon/bin/org/jfree/ui/InsetsTextField.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/IntegerDocument.class and jcommon/bin/org/jfree/ui/IntegerDocument.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/JTextObserver.class and jcommon/bin/org/jfree/ui/JTextObserver.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/FontChooserDialogTest.class and jcommon/bin/org/jfree/ui/junit/FontChooserDialogTest.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/GradientPaintTransformTypeTests.class and jcommon/bin/org/jfree/ui/junit/GradientPaintTransformTypeTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/HorizontalAlignmentTests.class and jcommon/bin/org/jfree/ui/junit/HorizontalAlignmentTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/LayerTests.class and jcommon/bin/org/jfree/ui/junit/LayerTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/RectangleAnchorTests.class and jcommon/bin/org/jfree/ui/junit/RectangleAnchorTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/RectangleEdgeTests.class and jcommon/bin/org/jfree/ui/junit/RectangleEdgeTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/RectangleInsetsTests.class and jcommon/bin/org/jfree/ui/junit/RectangleInsetsTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/SpacerTests.class and jcommon/bin/org/jfree/ui/junit/SpacerTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/StandardGradientPaintTransformerTests.class and jcommon/bin/org/jfree/ui/junit/StandardGradientPaintTransformerTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/TextAnchorTests.class and jcommon/bin/org/jfree/ui/junit/TextAnchorTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/UIPackageTests.class and jcommon/bin/org/jfree/ui/junit/UIPackageTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/junit/VerticalAlignmentTests.class and jcommon/bin/org/jfree/ui/junit/VerticalAlignmentTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/L1R1ButtonPanel.class and jcommon/bin/org/jfree/ui/L1R1ButtonPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/L1R2ButtonPanel.class and jcommon/bin/org/jfree/ui/L1R2ButtonPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/L1R3ButtonPanel.class and jcommon/bin/org/jfree/ui/L1R3ButtonPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/Layer.class and jcommon/bin/org/jfree/ui/Layer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/LengthLimitingDocument.class and jcommon/bin/org/jfree/ui/LengthLimitingDocument.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/ui/LocalizationBundle_de.properties jcommon/bin/org/jfree/ui/LocalizationBundle_de.properties
+*** jcommon-orig/bin/org/jfree/ui/LocalizationBundle_de.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/ui/LocalizationBundle_de.properties	2004-07-15 17:10:31.000000000 +0200
+***************
+*** 0 ****
+--- 1,25 ----
++ # org.jfree.ui.ui ResourceBundle properties file - german version
++ # 
++ # Changes (from 31-Aug-2003)
++ # --------------------------
++ # 15-Mar-2004 : Initial version (Christian W. Zuckschwerdt);
++ #
++ 
++ Attributes=Attribute:
++ B=U:
++ Bold=Fett
++ Bottom=Unten
++ Font=Schrift:
++ Insets=R√§nder:
++ Italic=Kursiv
++ L=L: 
++ Left=Links
++ No_Font_Selected=Keine Schrift gew√§hlt.
++ R=R: 
++ Right=Rechts
++ Size=Gr√∂√üe:
++ T=O: 
++ Top=Oben
++ Help=Hilfe
++ OK=OK
++ Cancel=Abbrechen
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/ui/LocalizationBundle_es.properties jcommon/bin/org/jfree/ui/LocalizationBundle_es.properties
+*** jcommon-orig/bin/org/jfree/ui/LocalizationBundle_es.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/ui/LocalizationBundle_es.properties	2004-11-02 18:45:44.000000000 +0100
+***************
+*** 0 ****
+--- 1,25 ----
++ # org.jfree.ui.ui ResourceBundle properties file spanish
++ # 
++ # Changes (from 31-Aug-2003)
++ # --------------------------
++ # 14-Oct-2004 : Initial version: Leopoldo Federico PÈrtile (Grupo de Procesamiento Digital de Im·genes)
++ #					   Universidad TecnolÛgica Nacional - Facultad Regional Resistencia, Argentina
++ 
++ Attributes=Atributos:
++ B=Inf:
++ Bold=Negrita
++ Bottom=Inferior
++ Font=Fuente:
++ Insets=M·rgenes:
++ Italic=Cursiva
++ L=Izq: 
++ Left=Izquierda
++ No_Font_Selected=No se seleccion\00F3 ninguna fuente.
++ R=Der: 
++ Right=Derecha
++ Size=Tama\u00f1o:
++ T=Sup: 
++ Top=Superior
++ Help=Ayuda
++ OK=Aceptar
++ Cancel=Cancelar
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/ui/LocalizationBundle_fr.properties jcommon/bin/org/jfree/ui/LocalizationBundle_fr.properties
+*** jcommon-orig/bin/org/jfree/ui/LocalizationBundle_fr.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/ui/LocalizationBundle_fr.properties	2004-07-15 17:10:31.000000000 +0200
+***************
+*** 0 ****
+--- 1,22 ----
++ # org.jfree.ui.ui ResourceBundle properties file - french version
++ # 
++ # Changes (from 31-Aug-2003)
++ # --------------------------
++ # 31-Aug-2003 : Initial version (AL);
++ #
++ 
++ Attributes=Attributs :
++ B=B : 
++ Bold=Gras
++ Bottom=Bas
++ Font=Police :
++ Insets=Position :
++ Italic=Italique
++ L=G : 
++ Left=Gauche
++ No_Font_Selected=Aucune police n'a \u00E9t\u00E9 s\u00E9lectionn\u00E9e.
++ R=D : 
++ Right=Droite
++ Size=Taille :
++ T=H : 
++ Top=Haut
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/ui/LocalizationBundle.properties jcommon/bin/org/jfree/ui/LocalizationBundle.properties
+*** jcommon-orig/bin/org/jfree/ui/LocalizationBundle.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/ui/LocalizationBundle.properties	2004-07-15 17:10:31.000000000 +0200
+***************
+*** 0 ****
+--- 1,25 ----
++ # org.jfree.ui.ui ResourceBundle properties file
++ # 
++ # Changes (from 31-Aug-2003)
++ # --------------------------
++ # 31-Aug-2003 : Initial version (AL);
++ #
++ 
++ Attributes=Attributes:
++ B=B:
++ Bold=Bold
++ Bottom=Bottom
++ Font=Font:
++ Insets=Insets:
++ Italic=Italic
++ L=L: 
++ Left=Left
++ No_Font_Selected=No font selected.
++ R=R: 
++ Right=Right
++ Size=Size:
++ T=T: 
++ Top=Top
++ Help=Help
++ OK=OK
++ Cancel=Cancel
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/ui/LocalizationBundle_pt_PT.properties jcommon/bin/org/jfree/ui/LocalizationBundle_pt_PT.properties
+*** jcommon-orig/bin/org/jfree/ui/LocalizationBundle_pt_PT.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/ui/LocalizationBundle_pt_PT.properties	2004-07-15 17:10:31.000000000 +0200
+***************
+*** 0 ****
+--- 1,22 ----
++ # org.jfree.chart.ChartPanel ResourceBundle properties file - portuguese version
++ # 
++ # Changes (from 09-Set-2003)
++ # --------------------------
++ # 09-Set-2003 : Initial version (Eduardo Ramalho);
++ #
++ 
++ Attributes=Atributos:
++ B=B:
++ Bold=Negrito
++ Bottom=Fundo
++ Font=Fonte:
++ Insets=Posi\u00e7\u00e3o:
++ Italic=It\u00e1lico
++ L=E:
++ Left=Esquerda
++ No_Font_Selected=Nenhuma fonte est\u00e1 seleccionada.
++ R=D:
++ Right=Direita
++ Size=Tamanho:
++ T=T:
++ Top=Topo
+\ Kein Zeilenumbruch am Dateiende.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/NumberCellRenderer.class and jcommon/bin/org/jfree/ui/NumberCellRenderer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/OverlayLayout.class and jcommon/bin/org/jfree/ui/OverlayLayout.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/ui/package.html jcommon/bin/org/jfree/ui/package.html
+*** jcommon-orig/bin/org/jfree/ui/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/ui/package.html	2004-07-15 17:09:43.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Utility classes for creating user interfaces.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/PaintSample.class and jcommon/bin/org/jfree/ui/PaintSample.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/RectangleAnchor.class and jcommon/bin/org/jfree/ui/RectangleAnchor.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/RectangleEdge.class and jcommon/bin/org/jfree/ui/RectangleEdge.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/RectangleInsets.class and jcommon/bin/org/jfree/ui/RectangleInsets.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/RefineryUtilities.class and jcommon/bin/org/jfree/ui/RefineryUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/SerialDateChooserPanel.class and jcommon/bin/org/jfree/ui/SerialDateChooserPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/Size2D.class and jcommon/bin/org/jfree/ui/Size2D.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/SortableTable.class and jcommon/bin/org/jfree/ui/SortableTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/SortableTableHeaderListener.class and jcommon/bin/org/jfree/ui/SortableTableHeaderListener.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/SortableTableModel.class and jcommon/bin/org/jfree/ui/SortableTableModel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/SortButtonRenderer.class and jcommon/bin/org/jfree/ui/SortButtonRenderer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/Spacer.class and jcommon/bin/org/jfree/ui/Spacer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/Spinner.class and jcommon/bin/org/jfree/ui/Spinner.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/StandardDialog.class and jcommon/bin/org/jfree/ui/StandardDialog.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/StandardGradientPaintTransformer.class and jcommon/bin/org/jfree/ui/StandardGradientPaintTransformer.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/StrokeChooserPanel$1.class and jcommon/bin/org/jfree/ui/StrokeChooserPanel$1.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/StrokeChooserPanel.class and jcommon/bin/org/jfree/ui/StrokeChooserPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/StrokeSample.class and jcommon/bin/org/jfree/ui/StrokeSample.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/AbstractTabbedUI.class and jcommon/bin/org/jfree/ui/tabbedui/AbstractTabbedUI.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/AbstractTabbedUI$ExitAction.class and jcommon/bin/org/jfree/ui/tabbedui/AbstractTabbedUI$ExitAction.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/AbstractTabbedUI$TabChangeHandler.class and jcommon/bin/org/jfree/ui/tabbedui/AbstractTabbedUI$TabChangeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/AbstractTabbedUI$TabEnableChangeListener.class and jcommon/bin/org/jfree/ui/tabbedui/AbstractTabbedUI$TabEnableChangeListener.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/DetailEditor.class and jcommon/bin/org/jfree/ui/tabbedui/DetailEditor.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/RootEditor.class and jcommon/bin/org/jfree/ui/tabbedui/RootEditor.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/RootPanel.class and jcommon/bin/org/jfree/ui/tabbedui/RootPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/TabbedApplet.class and jcommon/bin/org/jfree/ui/tabbedui/TabbedApplet.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/TabbedApplet$MenuBarChangeListener.class and jcommon/bin/org/jfree/ui/tabbedui/TabbedApplet$MenuBarChangeListener.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/TabbedDialog$1.class and jcommon/bin/org/jfree/ui/tabbedui/TabbedDialog$1.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/TabbedDialog.class and jcommon/bin/org/jfree/ui/tabbedui/TabbedDialog.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/TabbedDialog$MenuBarChangeListener.class and jcommon/bin/org/jfree/ui/tabbedui/TabbedDialog$MenuBarChangeListener.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/TabbedFrame$1.class and jcommon/bin/org/jfree/ui/tabbedui/TabbedFrame$1.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/TabbedFrame.class and jcommon/bin/org/jfree/ui/tabbedui/TabbedFrame.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/TabbedFrame$MenuBarChangeListener.class and jcommon/bin/org/jfree/ui/tabbedui/TabbedFrame$MenuBarChangeListener.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/tabbedui/VerticalLayout.class and jcommon/bin/org/jfree/ui/tabbedui/VerticalLayout.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/TextAnchor.class and jcommon/bin/org/jfree/ui/TextAnchor.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/TextAnchorTable.class and jcommon/bin/org/jfree/ui/TextAnchorTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/UIUtilities.class and jcommon/bin/org/jfree/ui/UIUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/VerticalAlignment.class and jcommon/bin/org/jfree/ui/VerticalAlignment.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/WizardDialog.class and jcommon/bin/org/jfree/ui/WizardDialog.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/ui/WizardPanel.class and jcommon/bin/org/jfree/ui/WizardPanel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/AbstractObjectList.class and jcommon/bin/org/jfree/util/AbstractObjectList.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ArrayUtilities.class and jcommon/bin/org/jfree/util/ArrayUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ArrayUtils.class and jcommon/bin/org/jfree/util/ArrayUtils.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/BooleanList.class and jcommon/bin/org/jfree/util/BooleanList.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/BooleanUtilities.class and jcommon/bin/org/jfree/util/BooleanUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/BooleanUtils.class and jcommon/bin/org/jfree/util/BooleanUtils.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/Configuration.class and jcommon/bin/org/jfree/util/Configuration.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/DefaultConfiguration.class and jcommon/bin/org/jfree/util/DefaultConfiguration.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/FontTable.class and jcommon/bin/org/jfree/util/FontTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/HashNMap.class and jcommon/bin/org/jfree/util/HashNMap.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/HashNMap$EmptyIterator.class and jcommon/bin/org/jfree/util/HashNMap$EmptyIterator.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/ArrayUtilitiesTests.class and jcommon/bin/org/jfree/util/junit/ArrayUtilitiesTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/BooleanListTests.class and jcommon/bin/org/jfree/util/junit/BooleanListTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/LogTest.class and jcommon/bin/org/jfree/util/junit/LogTest.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/LogTest$LogTargetImpl.class and jcommon/bin/org/jfree/util/junit/LogTest$LogTargetImpl.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/ObjectListTests.class and jcommon/bin/org/jfree/util/junit/ObjectListTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/ObjectTableTests.class and jcommon/bin/org/jfree/util/junit/ObjectTableTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/ObjectTableTests$TObjectTable.class and jcommon/bin/org/jfree/util/junit/ObjectTableTests$TObjectTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/ObjectUtilsTests.class and jcommon/bin/org/jfree/util/junit/ObjectUtilsTests.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/util/junit/package.html jcommon/bin/org/jfree/util/junit/package.html
+*** jcommon-orig/bin/org/jfree/util/junit/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/util/junit/package.html	2004-07-15 17:08:31.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ JUnit tests.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/PaintListTests.class and jcommon/bin/org/jfree/util/junit/PaintListTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/PaintTableTests.class and jcommon/bin/org/jfree/util/junit/PaintTableTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/RotationTests.class and jcommon/bin/org/jfree/util/junit/RotationTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/ShapeTableTests.class and jcommon/bin/org/jfree/util/junit/ShapeTableTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/ShapeUtilitiesTests.class and jcommon/bin/org/jfree/util/junit/ShapeUtilitiesTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/SortOrderTests.class and jcommon/bin/org/jfree/util/junit/SortOrderTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/StrokeTableTests.class and jcommon/bin/org/jfree/util/junit/StrokeTableTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/UnitTypeTests.class and jcommon/bin/org/jfree/util/junit/UnitTypeTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/junit/UtilPackageTests.class and jcommon/bin/org/jfree/util/junit/UtilPackageTests.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/Log.class and jcommon/bin/org/jfree/util/Log.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/LogContext.class and jcommon/bin/org/jfree/util/LogContext.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/Log$SimpleMessage.class and jcommon/bin/org/jfree/util/Log$SimpleMessage.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/LogTarget.class and jcommon/bin/org/jfree/util/LogTarget.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/NumberTable.class and jcommon/bin/org/jfree/util/NumberTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/NumberUtils.class and jcommon/bin/org/jfree/util/NumberUtils.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ObjectList.class and jcommon/bin/org/jfree/util/ObjectList.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ObjectTable.class and jcommon/bin/org/jfree/util/ObjectTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ObjectUtils.class and jcommon/bin/org/jfree/util/ObjectUtils.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/util/package.html jcommon/bin/org/jfree/util/package.html
+*** jcommon-orig/bin/org/jfree/util/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/util/package.html	2004-07-15 17:07:51.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ General utility classes.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/PaintList.class and jcommon/bin/org/jfree/util/PaintList.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/PaintTable.class and jcommon/bin/org/jfree/util/PaintTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/PaintUtilities.class and jcommon/bin/org/jfree/util/PaintUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/PaintUtils.class and jcommon/bin/org/jfree/util/PaintUtils.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/PrintStreamLogTarget.class and jcommon/bin/org/jfree/util/PrintStreamLogTarget.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/PublicCloneable.class and jcommon/bin/org/jfree/util/PublicCloneable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ReadOnlyIterator.class and jcommon/bin/org/jfree/util/ReadOnlyIterator.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ResourceBundleSupport.class and jcommon/bin/org/jfree/util/ResourceBundleSupport.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/Rotation.class and jcommon/bin/org/jfree/util/Rotation.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ShapeList.class and jcommon/bin/org/jfree/util/ShapeList.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ShapeTable.class and jcommon/bin/org/jfree/util/ShapeTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ShapeUtilities.class and jcommon/bin/org/jfree/util/ShapeUtilities.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/ShapeUtils.class and jcommon/bin/org/jfree/util/ShapeUtils.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/SortOrder.class and jcommon/bin/org/jfree/util/SortOrder.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/StackableException.class and jcommon/bin/org/jfree/util/StackableException.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/StackableRuntimeException.class and jcommon/bin/org/jfree/util/StackableRuntimeException.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/StringUtils.class and jcommon/bin/org/jfree/util/StringUtils.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/StrokeList.class and jcommon/bin/org/jfree/util/StrokeList.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/StrokeTable.class and jcommon/bin/org/jfree/util/StrokeTable.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/TableOrder.class and jcommon/bin/org/jfree/util/TableOrder.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/UnitType.class and jcommon/bin/org/jfree/util/UnitType.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/util/WaitingImageObserver.class and jcommon/bin/org/jfree/util/WaitingImageObserver.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/AbstractElementDefinitionHandler.class and jcommon/bin/org/jfree/xml/AbstractElementDefinitionHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/AttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/AttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/BooleanAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/BooleanAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/ByteAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/ByteAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/CharacterAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/CharacterAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/DoubleAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/DoubleAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/FloatAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/FloatAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/IntegerAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/IntegerAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/LongAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/LongAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/ShortAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/ShortAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/attributehandlers/StringAttributeHandler.class and jcommon/bin/org/jfree/xml/attributehandlers/StringAttributeHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/CommentHandler.class and jcommon/bin/org/jfree/xml/CommentHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/ElementDefinitionException.class and jcommon/bin/org/jfree/xml/ElementDefinitionException.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/ElementDefinitionHandler.class and jcommon/bin/org/jfree/xml/ElementDefinitionHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/AbstractObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/AbstractObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ArrayClassFactory.class and jcommon/bin/org/jfree/xml/factory/objects/ArrayClassFactory.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ArrayObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/ArrayObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/BasicStrokeObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/BasicStrokeObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/BeanObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/BeanObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/BooleanObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/BooleanObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ByteObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/ByteObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/CharacterObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/CharacterObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ClassComparator.class and jcommon/bin/org/jfree/xml/factory/objects/ClassComparator.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ClassFactory.class and jcommon/bin/org/jfree/xml/factory/objects/ClassFactory.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ClassFactoryCollector.class and jcommon/bin/org/jfree/xml/factory/objects/ClassFactoryCollector.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ClassFactoryImpl.class and jcommon/bin/org/jfree/xml/factory/objects/ClassFactoryImpl.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ClassLoaderObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/ClassLoaderObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/CollectionObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/CollectionObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ColorObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/ColorObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/DateObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/DateObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/DecimalFormatObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/DecimalFormatObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/Dimension2DObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/Dimension2DObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/DimensionObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/DimensionObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/DoubleObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/DoubleObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/FloatObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/FloatObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/IntegerObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/IntegerObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/JavaBaseClassFactory.class and jcommon/bin/org/jfree/xml/factory/objects/JavaBaseClassFactory.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/Line2DObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/Line2DObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/LongObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/LongObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/ObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ObjectFactoryException.class and jcommon/bin/org/jfree/xml/factory/objects/ObjectFactoryException.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/factory/objects/package.html jcommon/bin/org/jfree/xml/factory/objects/package.html
+*** jcommon-orig/bin/org/jfree/xml/factory/objects/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/factory/objects/package.html	2004-07-15 16:58:42.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Object descriptions for the parser.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/Point2DObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/Point2DObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/Rectangle2DObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/Rectangle2DObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/ShortObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/ShortObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/SimpleDateFormatObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/SimpleDateFormatObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/StringObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/StringObjectDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/URLClassFactory.class and jcommon/bin/org/jfree/xml/factory/objects/URLClassFactory.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/factory/objects/URLObjectDescription.class and jcommon/bin/org/jfree/xml/factory/objects/URLObjectDescription.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/generator/attributehandler.properties jcommon/bin/org/jfree/xml/generator/attributehandler.properties
+*** jcommon-orig/bin/org/jfree/xml/generator/attributehandler.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/generator/attributehandler.properties	2004-07-15 17:01:37.000000000 +0200
+***************
+*** 0 ****
+--- 1,7 ----
++ #
++ # Maps the attribute type class to the handler implementation
++ #
++ org.jfree.chart.axis.AxisLocation=org.jfree.chart.xml.attributehandlers.AxisLocationAttributeHandler
++ org.jfree.chart.renderer.ItemLabelAnchor=org.jfree.chart.xml.attributehandlers.ItemLabelAnchorAttributeHandler
++ org.jfree.chart.plot.PlotOrientation=org.jfree.chart.xml.attributehandlers.PlotOrientationAttributeHandler
++ org.jfree.ui.TextAnchor=org.jfree.chart.xml.attributehandlers.TextAnchorAttributeHandler
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/DefaultModelReader.class and jcommon/bin/org/jfree/xml/generator/DefaultModelReader.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/DescriptionGenerator.class and jcommon/bin/org/jfree/xml/generator/DescriptionGenerator.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/generator/generator.properties jcommon/bin/org/jfree/xml/generator/generator.properties
+*** jcommon-orig/bin/org/jfree/xml/generator/generator.properties	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/generator/generator.properties	2004-07-15 17:01:37.000000000 +0200
+***************
+*** 0 ****
+--- 1,45 ----
++ #
++ # Specifies the directory containing the sources ...
++ sourcedirectory=C:\\Documents and Settings\\sony\\My Documents\\eclipse-SDK-3.0M6-win32\\eclipse\\workspace\\jfreechart-cvs\\
++ 
++ #
++ # Where to generate the definition files ...
++ targetfile=C:\\model.xml
++ 
++ #
++ # From where to load the attribute handler definitions...
++ attributedefinition=attributehandler.properties
++ 
++ #
++ # The list of base classes we ignore when collecting the sources.
++ # Use this to remove unnecessary references.
++ ignore.baseclass.0=junit.framework.TestCase
++ ignore.baseclass.1=java.util.ResourceBundle
++ ignore.baseclass.2=java.awt.Component
++ ignore.baseclass.3=org.jfree.chart.ChartColor
++ ignore.baseclass.4=org.jfree.chart.ChartFactory
++ ignore.baseclass.5=org.jfree.chart.ChartUtilities
++ ignore.baseclass.6=java.lang.Throwable
++ ignore.baseclass.7=java.util.EventObject
++ ignore.baseclass.8=javax.swing.text.AbstractDocument
++ 
++ #
++ # The list of packages we ignore.
++ ignore.package.0=com.keypoint
++ ignore.package.1=org.jfree.xml
++ ignore.package.2=org.jfree.threads
++ ignore.package.3=org.jfree.resources
++ ignore.package.4=org.jfree.util
++ ignore.package.5=org.jfree.layout
++ ignore.package.6=org.jfree.io
++ ignore.package.7=org.jfree.demo
++ ignore.package.8=org.jfree.chart.demo
++ ignore.package.9=org.jfree.chart.event
++ ignore.package.10=org.jfree.chart.junit
++ ignore.package.11=org.jfree.chart.resources
++ ignore.package.12=org.jfree.chart.ui
++ ignore.package.13=org.jfree.data.xml
++ ignore.package.14=org.jfree.chart.servlet
++ ignore.package.15=org.jfree.chart.renderer.junit
++ ignore.package.16=org.jfree.chart.xml
++ 
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/JavaSourceCollector.class and jcommon/bin/org/jfree/xml/generator/JavaSourceCollector.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/JavaSourceCollector$CollectorFileFilter.class and jcommon/bin/org/jfree/xml/generator/JavaSourceCollector$CollectorFileFilter.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/ClassDescription.class and jcommon/bin/org/jfree/xml/generator/model/ClassDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/Comments.class and jcommon/bin/org/jfree/xml/generator/model/Comments.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/DescriptionModel.class and jcommon/bin/org/jfree/xml/generator/model/DescriptionModel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/IgnoredPropertyInfo.class and jcommon/bin/org/jfree/xml/generator/model/IgnoredPropertyInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/IndexedPropertyInfo.class and jcommon/bin/org/jfree/xml/generator/model/IndexedPropertyInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/KeyDescription.class and jcommon/bin/org/jfree/xml/generator/model/KeyDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/ManualMappingInfo.class and jcommon/bin/org/jfree/xml/generator/model/ManualMappingInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/MappingModel.class and jcommon/bin/org/jfree/xml/generator/model/MappingModel.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/MultiplexMappingInfo.class and jcommon/bin/org/jfree/xml/generator/model/MultiplexMappingInfo.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/generator/model/package.html jcommon/bin/org/jfree/xml/generator/model/package.html
+*** jcommon-orig/bin/org/jfree/xml/generator/model/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/generator/model/package.html	2004-07-15 17:00:25.000000000 +0200
+***************
+*** 0 ****
+--- 1,7 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Contains the classes describing the class model used in the
++ JFreeChart XML-parser and writer.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/PrintBeanInfo.class and jcommon/bin/org/jfree/xml/generator/model/PrintBeanInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/PropertyInfo.class and jcommon/bin/org/jfree/xml/generator/model/PropertyInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/PropertyType.class and jcommon/bin/org/jfree/xml/generator/model/PropertyType.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/model/TypeInfo.class and jcommon/bin/org/jfree/xml/generator/model/TypeInfo.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/ModelBuilder.class and jcommon/bin/org/jfree/xml/generator/ModelBuilder.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/generator/model.dtd jcommon/bin/org/jfree/xml/generator/model.dtd
+*** jcommon-orig/bin/org/jfree/xml/generator/model.dtd	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/generator/model.dtd	2004-07-15 16:59:35.000000000 +0200
+***************
+*** 0 ****
+--- 1,105 ----
++ <!--
++ The root of the document, contains all object descriptions and
++ include directives
++ -->
++ <!ELEMENT objects       (object|include|manual|mapping)*>
++ 
++ <!--
++ 
++ -->
++ <!ELEMENT manual        EMPTY>
++ <!ATTLIST manual
++     class           CDATA   #REQUIRED
++     read-handler    CDATA   #REQUIRED
++     write-handler   CDATA   #REQUIRED
++ >
++ 
++ <!--
++ Defines a mapping. A mapping is the base information for building
++ multiplexers. A multiplexer is bound to a given type and must resolve to
++ a real handler. A mutiplexer resolving to an other multiplexer is invalid
++ and should throw an exception.
++ 
++ The type-attribute define the attribute name which will contain the selector
++ parameter in the chart-xml. 
++ -->
++ <!ELEMENT mapping       (type)*>
++ <!ATTLIST mapping
++     type-attribute  CDATA   #IMPLIED
++     base-class      CDATA   #REQUIRED
++ >
++ <!--
++ Maps the given type (must be a subtype of the mapping base class) to
++ the given class name.
++ -->
++ <!ELEMENT type          EMPTY>
++ <!ATTLIST type
++     name            CDATA   #REQUIRED
++     class           CDATA   #REQUIRED
++ >
++ <!--
++ Defines a single object
++ 
++ The object may define a constructor to be used. If no manual constructor
++ is defined, the default constructor is used.
++ 
++ The properties described for the object must be setable via the usual
++ get() methods.
++ -->
++ <!ELEMENT object        (constructor?,(element-property|lookup|attribute-property|ignore)*)>
++ <!ATTLIST object
++     class           CDATA   #REQUIRED
++     register-name   CDATA   #IMPLIED
++     ignored         CDATA   #IMPLIED
++ >
++ 
++ <!--
++ Defines a constructor. The constructor can be parametrized  using
++ the properties defined for the class.
++ -->
++ <!ELEMENT constructor   (parameter)*>
++ 
++ <!-- Defines a property of an object.
++ A property can either be defined as xml-attribute, as lookup to an previously
++ defined register-name or it can be handled by an element.
++ -->
++ <!ELEMENT element-property      EMPTY>
++ <!ATTLIST element-property
++     name        CDATA   #REQUIRED
++     element     CDATA   #IMPLIED
++ >
++ 
++ <!ELEMENT lookup      EMPTY>
++ <!ATTLIST lookup
++     name        CDATA   #REQUIRED
++     lookup      CDATA   #IMPLIED
++ >
++ 
++ <!ELEMENT attribute-property      EMPTY>
++ <!ATTLIST attribute-property
++     name        CDATA   #REQUIRED
++     attribute   CDATA   #IMPLIED
++     handler     CDATA   #IMPLIED
++ >
++ 
++ <!--
++ Marks an ignored property. This property will not be used for parsing,
++ and the model generator will not touch or regenerate it
++ -->
++ <!ELEMENT ignore      EMPTY>
++ <!ATTLIST ignore
++     name        CDATA   #REQUIRED
++ >
++ 
++ <!-- Defines an included file. The file will be loaded during the parsing. -->
++ <!ELEMENT include       EMPTY>
++ <!ATTLIST include
++     src         CDATA   #REQUIRED
++ >
++ 
++ <!-- Defines a parameter for an constructor. -->
++ <!ELEMENT parameter     EMPTY>
++ <!ATTLIST parameter
++     class       CDATA   #REQUIRED
++     property    CDATA   #REQUIRED
++ >
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/ModelWriter.class and jcommon/bin/org/jfree/xml/generator/ModelWriter.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/generator/package.html jcommon/bin/org/jfree/xml/generator/package.html
+*** jcommon-orig/bin/org/jfree/xml/generator/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/generator/package.html	2004-07-15 16:59:35.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ XML generator.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/SourceCollector.class and jcommon/bin/org/jfree/xml/generator/SourceCollector.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/generator/SplittingModelWriter.class and jcommon/bin/org/jfree/xml/generator/SplittingModelWriter.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/package.html jcommon/bin/org/jfree/xml/package.html
+*** jcommon-orig/bin/org/jfree/xml/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/package.html	2004-07-15 16:55:42.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ XML parser.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/ParseException.class and jcommon/bin/org/jfree/xml/ParseException.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/AbstractXmlReadHandler.class and jcommon/bin/org/jfree/xml/parser/AbstractXmlReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/Base64ReadHandler.class and jcommon/bin/org/jfree/xml/parser/Base64ReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/BasicStrokeReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/BasicStrokeReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/ColorReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/ColorReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/FontReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/FontReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/GenericReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/GenericReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/GradientPaintReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/GradientPaintReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/InsetsReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/InsetsReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/ListReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/ListReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/NullReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/NullReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/ObjectRefHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/ObjectRefHandler.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/parser/coretypes/package.html jcommon/bin/org/jfree/xml/parser/coretypes/package.html
+*** jcommon-orig/bin/org/jfree/xml/parser/coretypes/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/parser/coretypes/package.html	2004-07-15 17:06:26.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ XML writers for some core classes.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/Point2DReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/Point2DReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/Rectangle2DReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/Rectangle2DReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/RenderingHintsReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/RenderingHintsReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/RenderingHintValueReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/RenderingHintValueReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/coretypes/StringReadHandler.class and jcommon/bin/org/jfree/xml/parser/coretypes/StringReadHandler.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/parser/package.html jcommon/bin/org/jfree/xml/parser/package.html
+*** jcommon-orig/bin/org/jfree/xml/parser/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/parser/package.html	2004-07-15 17:05:32.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ XML parser.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/RootXmlReadHandler.class and jcommon/bin/org/jfree/xml/parser/RootXmlReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/XmlReaderException.class and jcommon/bin/org/jfree/xml/parser/XmlReaderException.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/parser/XmlReadHandler.class and jcommon/bin/org/jfree/xml/parser/XmlReadHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/Parser.class and jcommon/bin/org/jfree/xml/Parser.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/ParserFrontend.class and jcommon/bin/org/jfree/xml/ParserFrontend.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/ParserUtil.class and jcommon/bin/org/jfree/xml/ParserUtil.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/AbstractModelReader.class and jcommon/bin/org/jfree/xml/util/AbstractModelReader.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/AbstractModelReader$SAXModelHandler.class and jcommon/bin/org/jfree/xml/util/AbstractModelReader$SAXModelHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/AttributeDefinition.class and jcommon/bin/org/jfree/xml/util/AttributeDefinition.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/Base64.class and jcommon/bin/org/jfree/xml/util/Base64.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/BasicTypeSupport.class and jcommon/bin/org/jfree/xml/util/BasicTypeSupport.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/ClassModelTags.class and jcommon/bin/org/jfree/xml/util/ClassModelTags.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/ConstructorDefinition.class and jcommon/bin/org/jfree/xml/util/ConstructorDefinition.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/GenericObjectFactory.class and jcommon/bin/org/jfree/xml/util/GenericObjectFactory.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/LookupDefinition.class and jcommon/bin/org/jfree/xml/util/LookupDefinition.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/ManualMappingDefinition.class and jcommon/bin/org/jfree/xml/util/ManualMappingDefinition.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/MultiplexMappingDefinition.class and jcommon/bin/org/jfree/xml/util/MultiplexMappingDefinition.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/MultiplexMappingEntry.class and jcommon/bin/org/jfree/xml/util/MultiplexMappingEntry.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/ObjectDescriptionException.class and jcommon/bin/org/jfree/xml/util/ObjectDescriptionException.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/ObjectFactory.class and jcommon/bin/org/jfree/xml/util/ObjectFactory.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/ObjectFactoryLoader.class and jcommon/bin/org/jfree/xml/util/ObjectFactoryLoader.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/util/package.html jcommon/bin/org/jfree/xml/util/package.html
+*** jcommon-orig/bin/org/jfree/xml/util/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/util/package.html	2004-07-15 17:04:48.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Utility classes for the XML framework.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/PropertyDefinition.class and jcommon/bin/org/jfree/xml/util/PropertyDefinition.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/util/SimpleObjectFactory.class and jcommon/bin/org/jfree/xml/util/SimpleObjectFactory.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/AbstractXmlWriteHandler.class and jcommon/bin/org/jfree/xml/writer/AbstractXmlWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/AttributeList$AttributeEntry.class and jcommon/bin/org/jfree/xml/writer/AttributeList$AttributeEntry.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/AttributeList$AttributeIterator.class and jcommon/bin/org/jfree/xml/writer/AttributeList$AttributeIterator.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/AttributeList.class and jcommon/bin/org/jfree/xml/writer/AttributeList.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/BasicStrokeWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/BasicStrokeWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/ColorWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/ColorWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/FontWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/FontWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/GenericWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/GenericWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/GradientPaintWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/GradientPaintWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/InsetsWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/InsetsWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/ListWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/ListWriteHandler.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/writer/coretypes/package.html jcommon/bin/org/jfree/xml/writer/coretypes/package.html
+*** jcommon-orig/bin/org/jfree/xml/writer/coretypes/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/writer/coretypes/package.html	2004-07-15 17:03:32.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Writers for some core classes.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/Point2DWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/Point2DWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/Rectangle2DWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/Rectangle2DWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/coretypes/RenderingHintsWriteHandler.class and jcommon/bin/org/jfree/xml/writer/coretypes/RenderingHintsWriteHandler.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/org/jfree/xml/writer/package.html jcommon/bin/org/jfree/xml/writer/package.html
+*** jcommon-orig/bin/org/jfree/xml/writer/package.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/org/jfree/xml/writer/package.html	2004-07-15 17:02:36.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ Core classes for writing XML files.
++ </body>
++ </html>
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/RootXmlWriteHandler.class and jcommon/bin/org/jfree/xml/writer/RootXmlWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/SafeTagList.class and jcommon/bin/org/jfree/xml/writer/SafeTagList.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/SafeTagList$SafeDescription.class and jcommon/bin/org/jfree/xml/writer/SafeTagList$SafeDescription.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/XmlWriteHandler.class and jcommon/bin/org/jfree/xml/writer/XmlWriteHandler.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/XMLWriter.class and jcommon/bin/org/jfree/xml/writer/XMLWriter.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/XMLWriterException.class and jcommon/bin/org/jfree/xml/writer/XMLWriterException.class sind verschieden.
+Bin‰rdateien jcommon-orig/bin/org/jfree/xml/writer/XMLWriterSupport.class and jcommon/bin/org/jfree/xml/writer/XMLWriterSupport.class sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/bin/overview.html jcommon/bin/overview.html
+*** jcommon-orig/bin/overview.html	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/bin/overview.html	2004-07-15 17:46:54.000000000 +0200
+***************
+*** 0 ****
+--- 1,11 ----
++ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
++ <html>
++ <body bgcolor="white">
++ <b>JCommon</b> is a free general purpose library for Java that is shared by
++ several other projects, including JFreeChart and JFreeReport.
++ <p>
++ Please visit <a
++ href="http://www.jfree.org/jcommon/index.html">http://www.jfree.org/jcommon/index.html</a>
++ for the latest information about JCommon.
++ </body>
++ </html>
+diff -rcNbB -x CVS jcommon-orig/.classpath jcommon/.classpath
+*** jcommon-orig/.classpath	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/.classpath	2004-11-06 20:29:16.000000000 +0100
+***************
+*** 0 ****
+--- 1,7 ----
++ <?xml version="1.0" encoding="UTF-8"?>
++ <classpath>
++ 	<classpathentry kind="src" path="source"/>
++ 	<classpathentry kind="lib" path="lib/junit.jar"/>
++ 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
++ 	<classpathentry kind="output" path="bin"/>
++ </classpath>
+Bin‰rdateien jcommon-orig/jcommon-0.9.7.jar and jcommon/jcommon-0.9.7.jar sind verschieden.
+diff -rcNbB -x CVS jcommon-orig/.project jcommon/.project
+*** jcommon-orig/.project	1970-01-01 01:00:00.000000000 +0100
+--- jcommon/.project	2004-11-06 20:29:16.000000000 +0100
+***************
+*** 0 ****
+--- 1,17 ----
++ <?xml version="1.0" encoding="UTF-8"?>
++ <projectDescription>
++ 	<name>jcommon</name>
++ 	<comment></comment>
++ 	<projects>
++ 	</projects>
++ 	<buildSpec>
++ 		<buildCommand>
++ 			<name>org.eclipse.jdt.core.javabuilder</name>
++ 			<arguments>
++ 			</arguments>
++ 		</buildCommand>
++ 	</buildSpec>
++ 	<natures>
++ 		<nature>org.eclipse.jdt.core.javanature</nature>
++ 	</natures>
++ </projectDescription>

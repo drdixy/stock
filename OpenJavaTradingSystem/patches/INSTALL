@@ -1,0 +1,147 @@
+all directories are assumed to be in the directory workspace, e.g.:
+workspace/
+ castordoclet
+ castordoclet-orig
+ OpenJavaTradingSystem
+ ...
+
+***************
+*jCookie-0.8b:*
+***************
+
+download the jCookie library from:
+http://jcookie.sourceforge.net/dljcookie.html
+and unzip it.
+
+change into the jCookie-0.8b directory and apply patch via:
+patch -p1 < ../OpenJavaTradingSystem/patches/jCookie-0.8b.diff
+
+if you need to create the patch, change into the common workspace directory and execute:
+rm -rf jCookie-0.8b/bin
+rm jCookie-0.8b/jCookie.jar
+diff -rcNbB -x CVS jCookie-0.8b-orig jCookie-0.8b > OpenJavaTradingSystem/patches/jCookie-0.8b.diff
+
+if you want to rebuild the jar archive change into the jCookie-0.8b directory and execute:
+ant
+
+***************
+*castordoclet:*
+***************
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/castordoclet login
+password: empty
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/castordoclet co -P -A castordoclet
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/castordoclet co -d castordoclet-orig -P -A castordoclet
+
+change into the castordoclet directory and apply patch via:
+patch -p1 < ../OpenJavaTradingSystem/patches/castor-doclet-src.diff
+
+if you need to create the patch, change into the common workspace directory and execute:
+diff -rcNbB -x CVS castordoclet-orig castordoclet > OpenJavaTradingSystem/patches/castor-doclet-src.diff
+
+if you want to rebuild the jar archive change into the castordoclet directory and execute:
+ant jar
+
+*********************
+*castor-0.9.5.3-src:*
+*********************
+cvs -d :pserver:anoncvs@castor.exolab.org:/cvs/castor login
+password: anoncvs
+cvs -d :pserver:anoncvs@castor.exolab.org:/cvs/castor co -d castor-0.9.5.3-src -P -r tag_0_9_5_3 castor
+cvs -d :pserver:anoncvs@castor.exolab.org:/cvs/castor co -d castor-0.9.5.3-src-orig -P -r tag_0_9_5_3 castor
+
+change into the castor-0.9.5.3-src directory and apply patch via:
+patch -p1 < ../OpenJavaTradingSystem/patches/castor_tag_0_9_5_3.diff
+
+if you need to create the patch, change into the common workspace directory and execute:
+m -rf castor-0.9.5.3-src/bin/ 
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig castor-0.9.5.3-src  > OpenJavaTradingSystem/patches/castor_tag_0_9_5_3.diff
+
+if you want to rebuild the jar archive change into the castor-0.9.5.3-src/src directory and execute:
+ant jar
+
+
+*******
+*JSci:*
+*******
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jsci login 
+password: empty
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jsci co -P -A jsci
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jsci co -d jsci-orig -P -A jsci
+
+change into the jsci directory and apply patch via:
+patch -p1 < ../OpenJavaTradingSystem/patches/jsci.diff
+
+if you need to create the patch, change into the common workspace directory and execute:
+diff -rcNbB -x CVS jsci-orig jsci > OpenJavaTradingSystem/patches/jsci.diff
+
+if you want to rebuild the jars change into the jsci directory and execute:
+ant classes
+ant jars
+
+*********************
+*JCommon/JFreeChart:*
+*********************
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jfreechart login
+password: empty
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jfreechart co -P -A jfreechart
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jfreechart co -d jfreechart-orig -P -A jfreechart
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jfreechart co -P -A jcommon
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/jfreechart co -d jcommon-orig -P -A jcommon
+
+change into the jfreechart directory and apply the patch via:
+patch -p1 < ../OpenJavaTradingSystem/patches/jfreechart.diff
+
+change into the jcommon directory and apply the patch via:
+patch -p1 < ../OpenJavaTradingSystem/patches/jcommon.diff
+
+if you need to create the patch, change into the common workspace directory and execute:
+diff -rcNbB -x CVS jfreechart-orig jfreechart > OpenJavaTradingSystem/patches/jfreechart.diff
+diff -rcNbB -x CVS jcommon-orig jcommon > OpenJavaTradingSystem/patches/jcommon.diff
+
+if you want to rebuild the jars change into the ant sub-directory and execute:
+ant compile
+
+
+***********************************
+*PushToTest:TestMaker:tm-tool.jar:*
+***********************************
+cvs -d:pserver:anon@cvs.pushtotest.com:/var/cvsroot login
+password: empty
+cvs -z3 -d:pserver:anon@cvs.pushtotest.com:/var/cvsroot co -d tm-tool -P -A tool/tool-java
+cvs -z3 -d:pserver:anon@cvs.pushtotest.com:/var/cvsroot co -d tm-tool-orig -P -A tool/tool-java
+
+change into the tm-tool directory and apply the patch via:
+patch -p1 < ../OpenJavaTradingSystem/patches/tm-tool.diff
+
+if you need to create the patch, change into the common workspace directory and execute:
+diff -rcNbB -x CVS tm-tool-orig tm-tool > OpenJavaTradingSystem/patches/tm-tool.diff
+
+if you want to rebuild the jars change into the tm-tool/src directory and execute:
+ant
+
+
+****************************
+*ArmedBearCommonLisp:j.jar:*
+****************************
+
+cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/armedbear-j login
+password: empty
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/armedbear-j co -P -A  j
+cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/armedbear-j co -d j-orig -P -A  j
+
+change into the j/ directory and apply the patch via:
+patch -p1 < ../OpenJavaTradingSystem/patches/j.diff
+
+if you need to create the patch, change into the common workspace directory and execute:
+rm -rf j/bin
+rm j/src/org/armedbear/j/build
+rm j/src/org/armedbear/j/version
+rm j/src/org/armedbear/lisp/build
+find j/src -name "*.cls" -exec rm {} \;
+find j/src -name "*.class" -exec rm {} \;
+find j/src -name "*~" -exec rm {} \;
+find j/src -name "*.abcl" -exec rm {} \;
+diff -rcNbB -x CVS j-orig j > OpenJavaTradingSystem/patches/j.diff
+
+if you want to rebuild the jars change into the j/ directory and execute:
+ant j.jar

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="castor"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry sourcepath="/j/src" kind="lib" path="lib/j.jar"/>
+	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
+	<classpathentry kind="lib" path="lib/jta1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/xmlParserAPIs.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/htmlparser.jar"/>
+	<classpathentry kind="lib" path="lib/jCookie.jar"/>
+	<classpathentry kind="lib" path="lib/tm-tool.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/castor-0.9.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-0.9.7.jar"/>
+	<classpathentry sourcepath="/jfreechart" kind="lib" path="lib/jfreechart-0.9.21.jar"/>
+	<classpathentry kind="lib" path="lib/core.jar"/>
+	<classpathentry sourcepath="/jsci" kind="lib" path="lib/wavelet.jar"/>
+	<classpathentry kind="lib" path="lib/joda-time-0.98.jar"/>
+	<classpathentry kind="lib" path="lib/asm-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/bsf.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

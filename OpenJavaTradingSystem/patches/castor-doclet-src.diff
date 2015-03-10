@@ -1,0 +1,465 @@
+diff -rcNbB -x CVS castordoclet-orig/build.xml castordoclet/build.xml
+*** castordoclet-orig/build.xml	1970-01-01 01:00:00.000000000 +0100
+--- castordoclet/build.xml	2004-12-18 09:16:10.000000000 +0100
+***************
+*** 0 ****
+--- 1,143 ----
++ <?xml version="1.0"?>
++ 
++ <project name="JDODoclet" default="jar" basedir=".">
++ 
++   <property name="name" value="castor-doclet" />
++   <property name="version" value="0.4.2.x" />
++   <property name="doclet.conf" value="src/conf" />
++   <property name="doclet.javadoc" value="doc/javadoc" />
++   <property name="doclet.src" value="src/java" />
++   <property name="doclet.classes" value="classes" />
++   <property name="doclet.pkg" value="org.castor.doclet" />
++   <property name="doclet.dist" value="dist" />
++   <path id="classpath">
++    <pathelement location="classes"/>
++    <pathelement location="../OpenJavaTradingSystem/lib/jdom.jar"/>
++ <!--
++    <fileset dir="lib">
++     <include name="*.jar"/>
++    </fileset>
++ -->
++   </path>
++ 
++   <target name="init">
++     <mkdir dir="doc" />
++     <mkdir dir="${doclet.javadoc}" />
++     <mkdir dir="${doclet.dist}" />
++   </target>
++ 
++   <target name="compile" depends="init">
++     <mkdir dir="${doclet.classes}" />
++     <javac srcdir="${doclet.src}" destdir="${doclet.classes}" debug="on">
++ 		  <classpath refid="classpath"/>
++ 		</javac>
++   </target>
++ 
++   <target name="jar" depends="compile">
++     <copy todir="${doclet.classes}">
++       <fileset dir="${doclet.conf}"/>
++     </copy>
++     <jar jarfile="${doclet.dist}/${name}.jar"
++         basedir="${doclet.classes}"
++         includes="**/*.class *.properties">
++ 	    <manifest>
++ 	      <attribute name="Built-By" value="${builder.name}"/>
++ 		    <section name="org.castor.doclet">
++ 		      <attribute name="Specification-Title" value="Castor Doclet" />
++ 		      <attribute name="Specification-Version" value="${version}" />
++ 		      <attribute name="Specification-Vendor" value="Castor Doclet" />
++ 		      <attribute name="Implementation-Title" value="org.castor.doclet" />
++ 		      <attribute name="Implementation-Version" value="${version}, ${today}" /> 
++ 		      <attribute name="Implementation-Vendor" value="castordoclet.sourceforge.nets" />
++ 		    </section>
++ 	    </manifest>
++     </jar>
++   </target>
++ 
++   <target name="javadoc" depends="init">
++ 		<javadoc packagenames="${doclet.pkg}.*"
++ 		         sourcepath="${doclet.src}"
++ 		         defaultexcludes="yes"
++ 		         destdir="${doclet.javadoc}"
++ 		         author="true"
++ 		         version="true"
++ 		         use="true"
++ 						 windowtitle="Castor Doclet">
++ 		  <classpath refid="classpath"/>
++ 		</javadoc>
++   </target>
++ 
++ 	<target name="makedoc" depends="init, javadoc">
++ 		<style basedir="srcdoc/xml" destdir="doc"
++ 			includes="**/*.xml"
++        extension=".html" style="srcdoc/style/main.xsl"/>
++     <copy todir="doc">
++       <fileset dir="srcdoc/style" includes="*.css"/>
++       <fileset dir="srcdoc/images" includes="*"/>
++     </copy>
++ 	</target>
++ 
++ 	<target name="deploydoc" depends="makedoc">
++ 	<property name="server" value="mguessan@castordoclet.sourceforge.net"/>
++ 	<property name="htdocs" value="/home/groups/c/ca/castordoclet/htdocs"/>
++ 	<exec executable="rsync">
++ 	 <arg line="rsync -e ssh -Cavz doc/* ${server}:${htdocs}" />
++ 	</exec>
++ 	</target>
++ 
++   <target name="release" depends="clean,init,jar,makedoc">
++     <zip basedir="${doclet.dist}"
++       zipfile="${doclet.dist}/${name}-jar-${version}.zip"
++       includes="${name}.jar" />
++ 
++     <zip basedir=".."
++       zipfile="${doclet.dist}/${name}-src-${version}.zip"
++       includes="castordoclet/build.xml,castordoclet/status.txt,
++       	castordoclet/conf/**,castordoclet/lib/**,
++       	castordoclet/src/**,
++       	castordoclet/srcdoc/**,
++       	castordoclet/examples/readme.txt,
++       	castordoclet/examples/**/*.xml,
++       	castordoclet/examples/lib/castor-0.9.3.21-mgu1.jar,
++       	castordoclet/examples/lib/hsqldb.jar,
++       	castordoclet/examples/lib/jdbc-se2.0.jar,
++       	castordoclet/examples/lib/jta.jar,
++       	castordoclet/examples/**/*.java,
++       	" />
++ 
++     <zip basedir="."
++       zipfile="${doclet.dist}/${name}-doc-${version}.zip"
++       includes="doc/**" />
++ 
++     <zip basedir="."
++       zipfile="${doclet.dist}/${name}-examples-${version}.zip"
++       includes="
++       	examples/readme.txt,
++       	examples/**/*.xml,
++       	examples/lib/castor-doclet.jar,
++       	examples/lib/xerces.jar,
++       	examples/lib/jdom.jar,
++       	examples/lib/castor-0.9.3.21-mgu1.jar,
++       	examples/lib/hsqldb.jar,
++       	examples/lib/jdbc-se2.0.jar,
++       	examples/lib/jta.jar,
++       	examples/**/*.java,
++       	" />
++   </target>
++ 
++ 	<target name="clean">
++ 		<delete dir="bak"/>
++ 		<delete dir="doc"/>
++ 		<delete dir="classes"/>
++ 		<delete dir="dist"/>
++     <delete dir="classes"/>
++     <delete file="examples/**/ddl/create.sql"/>
++     <delete file="examples/**/properties/mapping.xml"/>
++     <delete file="examples/**/testdb.properties"/>
++     <delete file="examples/**/testdb.script"/>
++     <delete file="examples/lib/castor-doclet.jar"/>
++     <delete file="examples/lib/jdom.jar"/>
++     <delete file="examples/lib/xerces.jar"/>
++ 	</target>
++ </project>
++ 
+diff -rcNbB -x CVS castordoclet-orig/.classpath castordoclet/.classpath
+*** castordoclet-orig/.classpath	1970-01-01 01:00:00.000000000 +0100
+--- castordoclet/.classpath	2004-12-18 10:00:14.000000000 +0100
+***************
+*** 0 ****
+--- 1,9 ----
++ <?xml version="1.0" encoding="UTF-8"?>
++ <classpath>
++ 	<classpathentry kind="src" path="src/java"/>
++ 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
++ 	<classpathentry kind="src" path="/OpenJavaTradingSystem"/>
++ 	<classpathentry kind="lib" path="/OpenJavaTradingSystem/lib/jdom.jar"/>
++ 	<classpathentry kind="var" path="TOOLS"/>
++ 	<classpathentry kind="output" path="classes"/>
++ </classpath>
+diff -rcNbB -x CVS castordoclet-orig/.project castordoclet/.project
+*** castordoclet-orig/.project	1970-01-01 01:00:00.000000000 +0100
+--- castordoclet/.project	2004-12-18 09:16:10.000000000 +0100
+***************
+*** 0 ****
+--- 1,17 ----
++ <?xml version="1.0" encoding="UTF-8"?>
++ <projectDescription>
++ 	<name>castordoclet</name>
++ 	<comment></comment>
++ 	<projects>
++ 	</projects>
++ 	<buildSpec>
++ 		<buildCommand>
++ 			<name>org.eclipse.jdt.core.javabuilder</name>
++ 			<arguments>
++ 			</arguments>
++ 		</buildCommand>
++ 	</buildSpec>
++ 	<natures>
++ 		<nature>org.eclipse.jdt.core.javanature</nature>
++ 	</natures>
++ </projectDescription>
+diff -rcNbB -x CVS castordoclet-orig/src/java/Main.java castordoclet/src/java/Main.java
+*** castordoclet-orig/src/java/Main.java	1970-01-01 01:00:00.000000000 +0100
+--- castordoclet/src/java/Main.java	2004-12-18 10:05:56.000000000 +0100
+***************
+*** 0 ****
+--- 1,49 ----
++ /*
++  * Created on 04.09.2004 by CS
++  *
++  */
++ 
++ /**
++  * @author CS
++  *
++  *  The OpenJavaTradingSystem (http://ojts.sourceforge.net/)  
++  *  is meant to be a common infrastructure to develop stock trading 
++  *  systems. It consists of four parts:
++  *   * the gathering of raw data over the internet
++  *   * the recognition of trading signals
++  *   * a visualisation module and
++  *   * modules to connect to the programmatic interfaces of trading platforms like banks. 
++  *  Copyright (C) 2004 Christian Schuhegger, Manuel Gonzalez Berges
++  *
++  *  This library is free software; you can redistribute it and/or
++  *  modify it under the terms of the GNU Lesser General Public
++  *  License as published by the Free Software Foundation; either
++  *  version 2.1 of the License, or (at your option) any later version.
++  *
++  *  This library is distributed in the hope that it will be useful,
++  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++  *  Lesser General Public License for more details.
++ 
++  *  You should have received a copy of the GNU Lesser General Public
++  *  License along with this library; if not, write to the Free Software
++  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
++  */
++ public class Main {
++ 
++ 	public static void main(String[] args) {
++ 		//"-J", "DFILE=db-schema",  "-J", "-DDB_TYPE=hsqldb -J-DLOG=1 ",
++ 		com.sun.tools.javadoc.Main.main(
++ 				new String[] {
++ 						"-sourcepath", "../OpenJavaTradingSystem/src", 
++ 						"-doclet"    , "org.castor.doclet.ddl.DDL",
++ 						"net.sf.ojts.jdo", "net.sf.ojts.jdo.portfolio"});
++ 		/*
++ 		com.sun.tools.javadoc.Main.execute(
++ 				new String[] {
++ 						"-sourcepath", "../OpenJavaTradingSystem/src", 
++ 						"-doclet"    , "org.castor.doclet.jdo.JDO",
++ 						"net.sf.ojts.jdo"});
++ 		*/
++ 	}
++ }
+diff -rcNbB -x CVS castordoclet-orig/src/java/org/castor/doclet/ddl/DDL.java castordoclet/src/java/org/castor/doclet/ddl/DDL.java
+*** castordoclet-orig/src/java/org/castor/doclet/ddl/DDL.java	2003-06-02 23:31:04.000000000 +0200
+--- castordoclet/src/java/org/castor/doclet/ddl/DDL.java	2004-12-18 10:21:03.000000000 +0100
+***************
+*** 99,105 ****
+  		ddlClassname = config.getProperty( key + ".classname" );
+  	}
+  
+! 	private SQLField link( SQLTable src, SQLTable dst, boolean inherits ){
+  		SQLPrimaryKey srcPK;
+  		SQLField field = null;
+  
+--- 99,105 ----
+  		ddlClassname = config.getProperty( key + ".classname" );
+  	}
+  
+! 	public static SQLField link( SQLTable src, SQLTable dst, boolean inherits ){
+  		SQLPrimaryKey srcPK;
+  		SQLField field = null;
+  
+***************
+*** 107,113 ****
+  		try{
+  			srcPK = (SQLPrimaryKey)src.getPrimaryKey();
+  		}catch( SQLObjectNotFoundException e ){
+! 			logger.warning( src.getName() + " doesn't have a PK. Can't link " +
+  			src.getName() + " with " + dst.getName() );
+  			return null;
+  		}
+--- 107,113 ----
+  		try{
+  			srcPK = (SQLPrimaryKey)src.getPrimaryKey();
+  		}catch( SQLObjectNotFoundException e ){
+! 		    Debug.getInstance().warning( src.getName() + " doesn't have a PK. Can't link " +
+  			src.getName() + " with " + dst.getName() );
+  			return null;
+  		}
+***************
+*** 230,235 ****
+--- 230,239 ----
+  			sqltype = typename;
+  		}
+  
++ 		// empty field to be used below
++ 		SQLField field1 = new SQLField();
++ 		field1.setTable(tbl);
++ 		
+  		//if the field is marked as ignore 
+  		Tag[] tags = field.tags("@ignore");
+  		if( tags.length > 0 )
+***************
+*** 241,246 ****
+--- 245,251 ----
+  		/* basic type */
+  		else if ( basic ){
+  			fld = new SQLField( name, sqltype );
++ 			fld.setTable(tbl);
+  			sqlObjects.push( fld );
+  			tbl.add( fld );
+  		}
+***************
+*** 248,254 ****
+  		/* 1-* or *-* relation */
+  		else if ( types.isCollection(sqltype) ){
+  			/* this is a dummy field that will by poped by endField() */
+! 			sqlObjects.push( new SQLField() );
+  		}
+  
+  		/* 1-1 relation, link with the foreign table via it's PK
+--- 253,259 ----
+  		/* 1-* or *-* relation */
+  		else if ( types.isCollection(sqltype) ){
+  			/* this is a dummy field that will by poped by endField() */
+! 			sqlObjects.push( field1 );
+  		}
+  
+  		/* 1-1 relation, link with the foreign table via it's PK
+***************
+*** 268,278 ****
+  					/* this is a dummy field that will by poped by endField() */
+  					fld = new SQLField();
+  				}
+  				sqlObjects.push( fld );
+  			}
+  			else{
+  				/* this will by pop by endField() */
+! 				sqlObjects.push( new SQLField() );
+  			}
+  		}
+  	}
+--- 273,284 ----
+  					/* this is a dummy field that will by poped by endField() */
+  					fld = new SQLField();
+  				}
++ 				fld.setTable(tbl);
+  				sqlObjects.push( fld );
+  			}
+  			else{
+  				/* this will by pop by endField() */
+! 				sqlObjects.push( field1 );
+  			}
+  		}
+  	}
+***************
+*** 298,308 ****
+          table = new SQLManyTable();
+          manyTables.put( manyTable, table );
+          table.setName(manyTable);
+-         tableList.add(table);
+          table.setFirstTable((SQLTable)tables.get(field.containingClass().qualifiedTypeName()));
+        // second many member
+        } else {
+          table.setSecondTable((SQLTable)tables.get(field.containingClass().qualifiedTypeName()));
+        }
+      }
+  
+--- 304,314 ----
+          table = new SQLManyTable();
+          manyTables.put( manyTable, table );
+          table.setName(manyTable);
+          table.setFirstTable((SQLTable)tables.get(field.containingClass().qualifiedTypeName()));
+        // second many member
+        } else {
+          table.setSecondTable((SQLTable)tables.get(field.containingClass().qualifiedTypeName()));
++         tableList.add(table);
+        }
+      }
+  
+diff -rcNbB -x CVS castordoclet-orig/src/java/org/castor/doclet/ddl/SQLManyTable.java castordoclet/src/java/org/castor/doclet/ddl/SQLManyTable.java
+*** castordoclet-orig/src/java/org/castor/doclet/ddl/SQLManyTable.java	2003-06-02 23:31:04.000000000 +0200
+--- castordoclet/src/java/org/castor/doclet/ddl/SQLManyTable.java	2004-12-18 10:12:07.000000000 +0100
+***************
+*** 21,28 ****
+      Enumeration it = pk.getChildren();
+      while (it.hasMoreElements()) {
+        SQLField key = (SQLField)it.nextElement();
+!       SQLField newField = new SQLField( key.getName(), key.getType(), key.getSize() );
+!       add(newField);
+        getChild(SQLPrimaryKey.class).add(newField);
+      }
+    }
+--- 21,29 ----
+      Enumeration it = pk.getChildren();
+      while (it.hasMoreElements()) {
+        SQLField key = (SQLField)it.nextElement();
+!       //SQLField newField = new SQLField( key.getName(), key.getType(), key.getSize() );
+!       SQLField newField = DDL.link( sqlTable, this, false );
+!       //add(newField);
+        getChild(SQLPrimaryKey.class).add(newField);
+      }
+    }
+diff -rcNbB -x CVS castordoclet-orig/src/java/org/castor/doclet/helper/Maker.java castordoclet/src/java/org/castor/doclet/helper/Maker.java
+*** castordoclet-orig/src/java/org/castor/doclet/helper/Maker.java	2003-10-03 10:50:16.000000000 +0200
+--- castordoclet/src/java/org/castor/doclet/helper/Maker.java	2004-12-18 09:16:10.000000000 +0100
+***************
+*** 1,8 ****
+--- 1,11 ----
+  package org.castor.doclet.helper;
+  
++ import java.util.ArrayList;
++ import java.util.Arrays;
+  import java.util.Enumeration;
+  import java.util.Hashtable;
+  import java.util.Iterator;
++ import java.util.List;
+  import java.util.Stack;
+  import java.util.Vector;
+  import com.sun.javadoc.*;
+***************
+*** 192,197 ****
+--- 195,228 ----
+  		return tags.length > 0 ? tags[0].text() : fld.name();
+  	}
+  
++ 	
++ 	public boolean isReference( FieldDoc fld ) {
++ 		boolean result = false;
++ 		
++ 	    ClassDoc fieldClass = root.classNamed(fld.type().qualifiedTypeName());
++ 	    if (fieldClass != null && isPersistent(fieldClass)) {
++ 	      // if fieldClass is persistent, it has an @table tag
++ 	      String sqlname = fieldClass.tags("@table")[0].text();
++ 
++ 	      List foreignFieldsList = new ArrayList();
++ 	      while (null != fieldClass && isPersistent(fieldClass)) {
++ 	      	    String name = fieldClass.qualifiedTypeName();
++ 				FieldDoc[] foreignFields = fieldClass.fields();
++ 				foreignFieldsList.addAll(Arrays.asList(foreignFields));
++ 				fieldClass = root.classNamed(fieldClass.superclass().qualifiedTypeName());
++ 	      }
++ 	      for (Iterator iter = foreignFieldsList.iterator(); iter.hasNext();) {
++ 			FieldDoc currentField = (FieldDoc) iter.next();
++ 	        if (currentField.tags("@primary-key").length > 0) {
++ 	        	result = true;
++ 	        	break;
++ 	        }			
++ 		  }
++ 	    }
++ 	
++ 		return result;
++ 	}
++ 	
+  	/**
+  	 * Return the sql name of a field.<br>
+  	 * The field name is defined by the tag @sql-name. It that tag is absent,
+diff -rcNbB -x CVS castordoclet-orig/src/java/org/castor/doclet/jdo/JDO.java castordoclet/src/java/org/castor/doclet/jdo/JDO.java
+*** castordoclet-orig/src/java/org/castor/doclet/jdo/JDO.java	2003-06-02 23:33:06.000000000 +0200
+--- castordoclet/src/java/org/castor/doclet/jdo/JDO.java	2004-12-18 09:16:10.000000000 +0100
+***************
+*** 232,237 ****
+--- 232,243 ----
+              }
+          }
+  
++         /* references other */
++         if( maker.isReference( field ) ) {
++             JDOTagHandler hnd  = (JDOTagHandler)tagHandlers.getTagHandler( "@xml-name" );
++             hnd.handle( "reference", "true", currentXMLElement() );        	
++         }
++ 
+          /* update name */
+          Element cur = currentXMLElement();
+          Attribute attr = cur.getAttribute( "name" );

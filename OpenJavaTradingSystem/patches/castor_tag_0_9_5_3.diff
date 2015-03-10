@@ -1,0 +1,831 @@
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/.classpath castor-0.9.5.3-src/.classpath
+*** castor-0.9.5.3-src-orig/.classpath	1970-01-01 01:00:00.000000000 +0100
+--- castor-0.9.5.3-src/.classpath	2004-11-28 15:40:22.000000000 +0100
+***************
+*** 0 ****
+--- 1,22 ----
++ <?xml version="1.0" encoding="UTF-8"?>
++ <classpath>
++ 	<classpathentry kind="src" path="src/main"/>
++ 	<classpathentry kind="lib" path="lib/adaptx_0.9.10.jar"/>
++ 	<classpathentry kind="lib" path="lib/ant_1.5.jar"/>
++ 	<classpathentry kind="lib" path="lib/ant_optional.jar"/>
++ 	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
++ 	<classpathentry kind="lib" path="lib/jakarta-oro-2.0.5.jar"/>
++ 	<classpathentry kind="lib" path="lib/jakarta-regexp-1.1.jar"/>
++ 	<classpathentry kind="lib" path="lib/jdbc-se2.0.jar"/>
++ 	<classpathentry kind="lib" path="lib/jndi_1.2.1.jar"/>
++ 	<classpathentry kind="lib" path="lib/jta1.0.1.jar"/>
++ 	<classpathentry kind="lib" path="lib/jtf-0.1.jar"/>
++ 	<classpathentry kind="lib" path="lib/junit_3.5.jar"/>
++ 	<classpathentry kind="lib" path="lib/ldapjdk_4.1.jar"/>
++ 	<classpathentry kind="lib" path="lib/log4j-1.2.8.jar"/>
++ 	<classpathentry kind="lib" path="lib/postgresql.jar"/>
++ 	<classpathentry kind="lib" path="lib/servlet.jar"/>
++ 	<classpathentry kind="lib" path="lib/xerces-J_1.4.0.jar"/>
++ 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
++ 	<classpathentry kind="output" path="bin"/>
++ </classpath>
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/.project castor-0.9.5.3-src/.project
+*** castor-0.9.5.3-src-orig/.project	1970-01-01 01:00:00.000000000 +0100
+--- castor-0.9.5.3-src/.project	2004-11-28 15:40:22.000000000 +0100
+***************
+*** 0 ****
+--- 1,17 ----
++ <?xml version="1.0" encoding="UTF-8"?>
++ <projectDescription>
++ 	<name>castor-0.9.5.3-src</name>
++ 	<comment></comment>
++ 	<projects>
++ 	</projects>
++ 	<buildSpec>
++ 		<buildCommand>
++ 			<name>org.eclipse.jdt.core.javabuilder</name>
++ 			<arguments>
++ 			</arguments>
++ 		</buildCommand>
++ 	</buildSpec>
++ 	<natures>
++ 		<nature>org.eclipse.jdt.core.javanature</nature>
++ 	</natures>
++ </projectDescription>
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/build.xml castor-0.9.5.3-src/src/build.xml
+*** castor-0.9.5.3-src-orig/src/build.xml	2004-03-02 08:48:46.000000000 +0100
+--- castor-0.9.5.3-src/src/build.xml	2005-05-08 21:10:16.000000000 +0200
+***************
+*** 148,154 ****
+  
+      <target name="main" depends="prepare"
+              description="The default target for compilation; includes debug and deprecation info">
+!         <javac srcdir="${main}" destdir="${classes}" excludes="${excludes}" debug="on" deprecation="${deprecation}">
+              <classpath refid="build.classpath"/>
+          </javac>
+          <copy todir="${classes}">
+--- 148,154 ----
+  
+      <target name="main" depends="prepare"
+              description="The default target for compilation; includes debug and deprecation info">
+!         <javac source="1.4" srcdir="${main}" destdir="${classes}" excludes="${excludes}" debug="on" deprecation="${deprecation}">
+              <classpath refid="build.classpath"/>
+          </javac>
+          <copy todir="${classes}">
+***************
+*** 163,169 ****
+  
+      <target name="main.opt" depends="prepare"
+              description="Same as the default target, but with optimization, no debug and no deprecation">
+!         <javac srcdir="${main}" destdir="${classes}" excludes="${excludes}" debug="${main.opt.debug}" deprecation="off" optimize="on">
+              <classpath refid="build.classpath"/>
+          </javac>
+          <copy todir="${classes}">
+--- 163,169 ----
+  
+      <target name="main.opt" depends="prepare"
+              description="Same as the default target, but with optimization, no debug and no deprecation">
+!         <javac source="1.4" srcdir="${main}" destdir="${classes}" excludes="${excludes}" debug="${main.opt.debug}" deprecation="off" optimize="on">
+              <classpath refid="build.classpath"/>
+          </javac>
+          <copy todir="${classes}">
+***************
+*** 176,182 ****
+      <target name="examples" depends="prepare, main"
+              description="Builds the example packages (including debugging info) and creates the webapp war file for the servlet example">
+          <mkdir dir="${build}/examples"/>
+!         <javac srcdir="${source}/examples" destdir="${build}/examples" debug="on" deprecation="${deprecation}" excludes="${exampleexcludes}">
+          <classpath refid="build.classpath"/>
+      </javac>
+  
+--- 176,182 ----
+      <target name="examples" depends="prepare, main"
+              description="Builds the example packages (including debugging info) and creates the webapp war file for the servlet example">
+          <mkdir dir="${build}/examples"/>
+!         <javac source="1.4" srcdir="${source}/examples" destdir="${build}/examples" debug="on" deprecation="${deprecation}" excludes="${exampleexcludes}">
+          <classpath refid="build.classpath"/>
+      </javac>
+  
+***************
+*** 219,225 ****
+  
+      <target name="tests" depends="prepare" description="Build the tests packages">
+          <mkdir dir="${build}/tests"/>
+!         <javac srcdir="${source}/tests" destdir="${build}/tests" excludes="${testexcludes}" debug="on" deprecation="${deprecation}">
+          <classpath refid="build.classpath"/>
+      </javac>
+  
+--- 219,225 ----
+  
+      <target name="tests" depends="prepare" description="Build the tests packages">
+          <mkdir dir="${build}/tests"/>
+!         <javac source="1.4" srcdir="${source}/tests" destdir="${build}/tests" excludes="${testexcludes}" debug="on" deprecation="${deprecation}">
+          <classpath refid="build.classpath"/>
+      </javac>
+  
+***************
+*** 462,468 ****
+              <arg value="-types"/>
+              <arg value="j2"/>
+          </java>
+!         <javac destdir="${classes}" excludes="${excludes}" debug="${main.opt.debug}" deprecation="off" optimize="on">
+              <src path="${gen.src}" />
+              <classpath refid="build.classpath"/>
+          </javac>
+--- 462,468 ----
+              <arg value="-types"/>
+              <arg value="j2"/>
+          </java>
+!         <javac source="1.4" destdir="${classes}" excludes="${excludes}" debug="${main.opt.debug}" deprecation="off" optimize="on">
+              <src path="${gen.src}" />
+              <classpath refid="build.classpath"/>
+          </javac>
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/jdo/drivers/HsqlQueryExpression.java castor-0.9.5.3-src/src/main/org/exolab/castor/jdo/drivers/HsqlQueryExpression.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/jdo/drivers/HsqlQueryExpression.java	2004-01-19 21:01:46.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/jdo/drivers/HsqlQueryExpression.java	2004-11-28 15:40:22.000000000 +0100
+***************
+*** 262,276 ****
+       */
+      private void addTables(StringBuffer buffer, Hashtable tables, boolean first)
+      {
+!       Enumeration enum = tables.elements();
+!       while ( enum.hasMoreElements() )
+        {
+          if ( first )
+            first = false;
+          else
+            buffer.append( JDBCSyntax.TableSeparator );
+  
+!         buffer.append( _factory.quoteName( (String) enum.nextElement() ) );
+        }
+      }
+  
+--- 262,279 ----
+       */
+      private void addTables(StringBuffer buffer, Hashtable tables, boolean first)
+      {
+!     	
+!       Enumeration aliases = tables.keys();
+!       while ( aliases.hasMoreElements() )
+        {
++       	String alias     = (String) aliases.nextElement();
++       	String tablename = (String) tables.get(alias);
+          if ( first )
+            first = false;
+          else
+            buffer.append( JDBCSyntax.TableSeparator );
+  
+!         buffer.append( _factory.quoteName( tablename ) + " " + alias );
+        }
+      }
+  
+***************
+*** 606,618 ****
+     *   because they are the only ones which require alias creation
+     */
+    private final Hashtable _hash;
+  
+    /**
+     * Public constructor. This builds an alias info class from the joins 
+     *   participating in a query
+     */
+!   public HsqlAliasInfo(Vector joins)
+!     { _hash = getRepeatedTablesInOuterJoinsHash(joins); }
+  
+     /**
+      * This method returns the hash internal values
+--- 609,624 ----
+     *   because they are the only ones which require alias creation
+     */
+    private final Hashtable _hash;
++   private final Hashtable _inner_hash;
+  
+    /**
+     * Public constructor. This builds an alias info class from the joins 
+     *   participating in a query
+     */
+!   public HsqlAliasInfo(Vector joins) { 
+!   	_hash = getRepeatedTablesInOuterJoinsHash(joins);
+!   	_inner_hash = getRepeatedTablesInInnerJoinsHash(joins);
+!   }
+  
+     /**
+      * This method returns the hash internal values
+***************
+*** 622,628 ****
+     {
+       Hashtable hash = new Hashtable();
+  
+!      Hashtable countHash = getTableCountInOuterJoinsHash(joins);
+       String table;
+       Vector vec;
+       for(Enumeration keys = countHash.keys(); keys.hasMoreElements();)
+--- 628,634 ----
+     {
+       Hashtable hash = new Hashtable();
+  
+!      Hashtable countHash = getTableCountInJoinsHash(joins, true);
+       String table;
+       Vector vec;
+       for(Enumeration keys = countHash.keys(); keys.hasMoreElements();)
+***************
+*** 643,648 ****
+--- 649,679 ----
+       return hash;
+     }
+  
++    private Hashtable getRepeatedTablesInInnerJoinsHash(Vector joins)
++    {
++      Hashtable hash = new Hashtable();
++ 
++      Hashtable countHash = getTableCountInJoinsHash(joins, false);
++      String table;
++      Vector vec;
++      for(Enumeration keys = countHash.keys(); keys.hasMoreElements();)
++      {
++        table = (String)keys.nextElement();
++        vec = (Vector)countHash.get( table );
++ 
++        if(vec.size() > 1)
++        {
++          Hashtable temp = new Hashtable();
++          for(Enumeration joinenum = vec.elements(); joinenum.hasMoreElements();)
++            temp.put( joinenum.nextElement(), table );
++ 
++          hash.put(table, temp);
++        }
++      }
++ 
++      return hash;
++    }
++    
+     /**
+      * This method returns a hashtable strcture which the keys are each of the
+      * tables defined in outer join clauses and the values is a Vector of
+***************
+*** 650,656 ****
+      * as an auxiliary to create the structure described in the
+      * getRepeatedTablesInOuterJoinsHash() method
+      */
+!    private Hashtable getTableCountInOuterJoinsHash(Vector joins)
+     {
+       Hashtable hash = new Hashtable();
+       Join join = null;
+--- 681,687 ----
+      * as an auxiliary to create the structure described in the
+      * getRepeatedTablesInOuterJoinsHash() method
+      */
+!    private Hashtable getTableCountInJoinsHash(Vector joins, boolean getOnlyOuter)
+     {
+       Hashtable hash = new Hashtable();
+       Join join = null;
+***************
+*** 658,664 ****
+       for ( int i = 0 ; i < joins.size() ; ++i )
+       {
+         join = (Join)joins.elementAt( i );
+!        if (join.outer)
+         {
+           addTableCount(hash, join.leftTable, join);
+           addTableCount(hash, join.rightTable, join);
+--- 689,700 ----
+       for ( int i = 0 ; i < joins.size() ; ++i )
+       {
+         join = (Join)joins.elementAt( i );
+!        if (getOnlyOuter && join.outer )
+!        {
+!          addTableCount(hash, join.leftTable, join);
+!          addTableCount(hash, join.rightTable, join);
+!        }
+!        if (!getOnlyOuter && !join.outer )
+         {
+           addTableCount(hash, join.leftTable, join);
+           addTableCount(hash, join.rightTable, join);
+***************
+*** 704,710 ****
+     * Check if the given table is involved in more thatn one oter join
+     */
+    public boolean tableExists(String table)
+!     { return _hash.containsKey(table); }
+  
+    /**
+     * Return any alias for the given table
+--- 740,746 ----
+     * Check if the given table is involved in more thatn one oter join
+     */
+    public boolean tableExists(String table)
+!     { return _hash.containsKey(table) || _inner_hash.containsKey(table); }
+  
+    /**
+     * Return any alias for the given table
+***************
+*** 715,723 ****
+    public String getAnAliasFor(String table)
+      {
+      Hashtable hash = (Hashtable)_hash.get(table);
+  
+!     return (hash == null)?
+!       null : (String)hash.elements().nextElement();
+      }
+  
+    /**
+--- 751,763 ----
+    public String getAnAliasFor(String table)
+      {
+      Hashtable hash = (Hashtable)_hash.get(table);
++     String r = (hash == null)? null : (String)hash.elements().nextElement();
++     if(null == r) {
++         hash = (Hashtable)_inner_hash.get(table);
++     	r = (hash == null)? null : (String)hash.elements().nextElement();
++     }
+  
+!     return r;
+      }
+  
+    /**
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/jdo/engine/DatabaseRegistry.java castor-0.9.5.3-src/src/main/org/exolab/castor/jdo/engine/DatabaseRegistry.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/jdo/engine/DatabaseRegistry.java	2004-01-19 12:52:47.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/jdo/engine/DatabaseRegistry.java	2005-05-31 19:07:01.000000000 +0200
+***************
+*** 53,58 ****
+--- 53,60 ----
+  import java.util.Enumeration;
+  import java.util.Hashtable;
+  import java.util.Properties;
++ import java.util.regex.Matcher;
++ import java.util.regex.Pattern;
+  
+  import javax.naming.InitialContext;
+  import javax.naming.NameNotFoundException;
+***************
+*** 236,241 ****
+--- 238,260 ----
+              if ( _databases.get( database.getName() ) != null )
+                  return;
+  
++             String jdbc_url = database.getDriver().getUrl();
++             Pattern pattern = Pattern.compile("^(.*)\\$\\{(.*?)\\}(.*)$");
++             while(true) {
++                 Matcher matcher = pattern.matcher(jdbc_url);
++                 if(!matcher.matches())
++                     break;
++                 String begin = matcher.group(1);
++                 String end   = matcher.group(3);
++                 String prop  = matcher.group(2);
++                 if(null != System.getProperty(prop)) {
++                     Pattern replpattern = Pattern.compile("${" + prop + "}", Pattern.LITERAL);
++                     String replacement =  System.getProperty(prop);
++                     jdbc_url = replpattern.matcher(jdbc_url).replaceFirst(replacement);
++                 }
++             }
++             database.getDriver().setUrl(jdbc_url);
++             
+              // Complain if no database engine was specified, otherwise get
+              // a persistence factory for that database engine.
+              if ( database.getEngine() == null  )
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/jdo/engine/SQLEngine.java castor-0.9.5.3-src/src/main/org/exolab/castor/jdo/engine/SQLEngine.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/jdo/engine/SQLEngine.java	2004-02-13 22:37:18.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/jdo/engine/SQLEngine.java	2005-05-22 11:48:46.000000000 +0200
+***************
+*** 482,489 ****
+       *
+       * Result key will be in java type.
+       */
+!     private Object generateKey( Database database, Object conn, PreparedStatement stmt ) throws PersistenceException {
+!         Object identity;
+          Connection connection;
+          Properties prop = null;
+  
+--- 482,488 ----
+       *
+       * Result key will be in java type.
+       */
+!     private Object generateKey( Database database, Object conn, PreparedStatement stmt, Object identity ) throws PersistenceException {
+          Connection connection;
+          Properties prop = null;
+  
+***************
+*** 493,505 ****
+              connection = getSeparateConnection( database );
+          }
+  
+-         if (stmt != null) {
+              prop = new Properties();
+              prop.put("insertStatement", stmt);
+          }
+          synchronized (connection) {
+!             identity = _keyGen.generateKey( connection, _clsDesc.getTableName(),
+!                 _ids[0].name, prop );
+          }
+  
+          if ( identity == null )
+--- 492,505 ----
+              connection = getSeparateConnection( database );
+          }
+  
+          prop = new Properties();
++         if(null != identity)
++             prop.put("identity", identity);
++         if (stmt != null) {
+              prop.put("insertStatement", stmt);
+          }
+          synchronized (connection) {
+!             identity = _keyGen.generateKey( connection, _clsDesc.getTableName(), _ids[0].name, prop );
+          }
+  
+          if ( identity == null )
+***************
+*** 529,535 ****
+  
+              // Generate key before INSERT
+              else if ( _keyGen != null && _keyGen.getStyle() == KeyGenerator.BEFORE_INSERT )
+!                 identity = generateKey( database, conn, null );   // genKey return identity in JDO type
+  
+  
+              if ( _keyGen != null && _keyGen.getStyle() == KeyGenerator.DURING_INSERT )
+--- 529,535 ----
+  
+              // Generate key before INSERT
+              else if ( _keyGen != null && _keyGen.getStyle() == KeyGenerator.BEFORE_INSERT )
+!                 identity = generateKey( database, conn, null, identity );   // genKey return identity in JDO type
+  
+  
+              if ( _keyGen != null && _keyGen.getStyle() == KeyGenerator.DURING_INSERT )
+***************
+*** 614,620 ****
+  
+              // Generate key after INSERT
+              if ( _keyGen != null && _keyGen.getStyle() == KeyGenerator.AFTER_INSERT ) {
+!                 identity = generateKey( database, conn, stmt );
+              }
+  
+              return identity;
+--- 614,620 ----
+  
+              // Generate key after INSERT
+              if ( _keyGen != null && _keyGen.getStyle() == KeyGenerator.AFTER_INSERT ) {
+!                 identity = generateKey( database, conn, stmt, identity );
+              }
+  
+              return identity;
+***************
+*** 2003,2006 ****
+--- 2003,2011 ----
+              return null;
+          }
+      }
++ 
++     
++     public KeyGenerator getKeyGen() {
++         return _keyGen;
++     }
+  }
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/jdo/oql/ParseTreeWalker.java castor-0.9.5.3-src/src/main/org/exolab/castor/jdo/oql/ParseTreeWalker.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/jdo/oql/ParseTreeWalker.java	2003-03-03 08:08:25.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/jdo/oql/ParseTreeWalker.java	2004-11-28 15:40:22.000000000 +0100
+***************
+*** 54,62 ****
+--- 54,65 ----
+  import org.exolab.castor.persist.LockEngine;
+  import org.exolab.castor.persist.spi.QueryExpression;
+  import org.exolab.castor.jdo.QueryException;
++ import org.exolab.castor.jdo.engine.DatabaseRegistry;
+  import org.exolab.castor.jdo.engine.SQLEngine;
+  import org.exolab.castor.jdo.engine.JDOClassDescriptor;
+  import org.exolab.castor.jdo.engine.JDOFieldDescriptor;
++ import org.exolab.castor.mapping.ClassDescriptor;
++ import org.exolab.castor.mapping.MappingResolver;
+  import org.exolab.castor.mapping.loader.Types;
+  import org.exolab.castor.jdo.engine.JDBCSyntax;
+  
+***************
+*** 486,491 ****
+--- 489,504 ----
+              projectionName.append(".").append(curName);
+              projectionInfo.addElement(curName);
+              curClassDesc = (JDOClassDescriptor) curField.getClassDescriptor();
++             if(curClassDesc == null) {
++                 DatabaseRegistry reg = DatabaseRegistry.getDatabaseRegistry(curField.getFieldType());
++                 if(null != reg) {
++                 	MappingResolver mr = reg.getMappingResolver();
++                     ClassDescriptor cd =  mr.getDescriptor(curField.getFieldType());
++                     curClassDesc = (JDOClassDescriptor) cd;
++                     curField.setClassDescriptor(curClassDesc);                	
++                 }
++             }
++             //this._engine.
+              if ( curClassDesc == null && e.hasMoreElements() )
+                  throw new QueryException( "An non-reference field was requested: " + curName + " (" + curClassDesc + ")" );
+              count++;
+***************
+*** 640,645 ****
+--- 653,660 ----
+          field = getFieldDesc( fieldTree.getToken().getTokenValue(), _clsDesc );
+          if (field != null)
+              _fieldInfo.put(fieldTree, field);
++         if(_fromClassAlias.equals(fieldTree.getToken().getTokenValue()))
++         	return null;
+      }
+      if (field == null)
+          throw new QueryException( "The field " + fieldTree.getToken().getTokenValue() + " was not found." );
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/mapping/loader/FieldDescriptorImpl.java castor-0.9.5.3-src/src/main/org/exolab/castor/mapping/loader/FieldDescriptorImpl.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/mapping/loader/FieldDescriptorImpl.java	2004-02-11 00:02:46.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/mapping/loader/FieldDescriptorImpl.java	2004-11-28 15:40:22.000000000 +0100
+***************
+*** 251,256 ****
+--- 251,261 ----
+          return _clsDesc;
+      }
+  
++     /*public void setClassDescriptor(ClassDescriptor desc)
++     {
++         _clsDesc = desc;
++     }*/
++ 
+  
+      public FieldHandler getHandler()
+      {
+***************
+*** 270,276 ****
+      /**
+       * Mutator method used by {@link MappingLoader}.
+       */
+!     void setClassDescriptor( ClassDescriptor clsDesc )
+      {
+          _clsDesc = clsDesc;
+      }
+--- 275,281 ----
+      /**
+       * Mutator method used by {@link MappingLoader}.
+       */
+!     public void setClassDescriptor( ClassDescriptor clsDesc )
+      {
+          _clsDesc = clsDesc;
+      }
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/mapping/Mapping.java castor-0.9.5.3-src/src/main/org/exolab/castor/mapping/Mapping.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/mapping/Mapping.java	2004-02-23 05:13:49.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/mapping/Mapping.java	2004-11-28 15:40:22.000000000 +0100
+***************
+*** 60,65 ****
+--- 60,66 ----
+  import org.exolab.castor.xml.MarshalException;
+  import org.exolab.castor.xml.Unmarshaller;
+  import org.exolab.castor.xml.UnmarshalListener;
++ import org.exolab.castor.xml.XMLFieldDescriptor;
+  import org.exolab.castor.mapping.loader.MappingLoader;
+  import org.exolab.castor.mapping.xml.MappingRoot;
+  import org.exolab.castor.mapping.xml.Include;
+***************
+*** 594,600 ****
+           * @param idref the IDREF to resolve.
+           * @return the Object whose id matches the given IDREF.
+          **/
+!         public Object resolve(String idref) {
+              if (_mapping == null) return null;
+              for (int i = 0; i < _mapping.getClassMappingCount(); i++) {
+                  ClassMapping clsMap = _mapping.getClassMapping(i);
+--- 595,601 ----
+           * @param idref the IDREF to resolve.
+           * @return the Object whose id matches the given IDREF.
+          **/
+!         public Object resolve(String idref, XMLFieldDescriptor descriptor, Object parent) {
+              if (_mapping == null) return null;
+              for (int i = 0; i < _mapping.getClassMappingCount(); i++) {
+                  ClassMapping clsMap = _mapping.getClassMapping(i);
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/persist/ClassMolder.java castor-0.9.5.3-src/src/main/org/exolab/castor/persist/ClassMolder.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/persist/ClassMolder.java	2004-02-13 22:12:04.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/persist/ClassMolder.java	2005-05-22 12:13:03.000000000 +0200
+***************
+*** 79,84 ****
+--- 79,85 ----
+  import org.exolab.castor.jdo.engine.JDOCallback;
+  import org.exolab.castor.jdo.engine.JDOClassDescriptor;
+  import org.exolab.castor.jdo.engine.JDOFieldDescriptor;
++ import org.exolab.castor.jdo.engine.SQLEngine;
+  import org.exolab.castor.mapping.AccessMode;
+  import org.exolab.castor.mapping.ClassDescriptor;
+  import org.exolab.castor.mapping.FieldDescriptor;
+***************
+*** 91,96 ****
+--- 92,99 ----
+  import org.exolab.castor.mapping.xml.FieldMapping;
+  import org.exolab.castor.persist.spi.CallbackInterceptor;
+  import org.exolab.castor.persist.spi.Complex;
++ import org.exolab.castor.persist.spi.KeyGenerator;
++ import org.exolab.castor.persist.spi.OJTSExtendedKeyGenerator;
+  import org.exolab.castor.persist.spi.Persistence;
+  import org.exolab.castor.persist.spi.PersistenceFactory;
+  import org.exolab.castor.util.Messages;
+***************
+*** 634,640 ****
+                  if ( _fhs[i].isPersistanceCapable()
+                          && _fhs[i].getFieldClassMolder() != this
+                          && _fhs[i].isStored()
+!                         && _fhs[i].getFieldClassMolder().isKeyGeneratorUsed() ) {
+                      maxPrior = Math.max( maxPrior, _fhs[i].getFieldClassMolder().getPriority()+1 );
+                  }
+                  /* should an "if case" for add _ids[i].isForeginKey() in the future */
+--- 637,643 ----
+                  if ( _fhs[i].isPersistanceCapable()
+                          && _fhs[i].getFieldClassMolder() != this
+                          && _fhs[i].isStored()
+!                         && _fhs[i].getFieldClassMolder().isKeyGeneratorUsed(null) ) {
+                      maxPrior = Math.max( maxPrior, _fhs[i].getFieldClassMolder().getPriority()+1 );
+                  }
+                  /* should an "if case" for add _ids[i].isForeginKey() in the future */
+***************
+*** 909,916 ****
+          }
+  
+          // ask Persistent to create the object into the persistence storage
+!         createdId = _persistence.create(tx.getDatabase(), (Connection)tx.getConnection(oid.getLockEngine()),
+!                 fields, ids );
+  
+          if ( createdId == null )
+              throw new PersistenceException("Identity can't be created!");
+--- 912,919 ----
+          }
+  
+          // ask Persistent to create the object into the persistence storage
+!         Object initids = getActualIdentity(tx, object);
+!         createdId = _persistence.create(tx.getDatabase(), (Connection)tx.getConnection(oid.getLockEngine()), fields, initids );
+  
+          if ( createdId == null )
+              throw new PersistenceException("Identity can't be created!");
+***************
+*** 2671,2680 ****
+      public Object getIdentity( TransactionContext tx, Object o ) {
+          // [oleg] In the case where key generator is used,
+          // the value of identity is dummy, set it to null
+!         if ( isKeyGeneratorUsed() && ! (tx.isPersistent(o) || tx.isReadOnly(o))) {
+              return null;
+          } else {
+!             return getActualIdentity( tx, o );
+          }
+      }
+  
+--- 2674,2684 ----
+      public Object getIdentity( TransactionContext tx, Object o ) {
+          // [oleg] In the case where key generator is used,
+          // the value of identity is dummy, set it to null
+!         Object actualid = getActualIdentity( tx, o );
+!         if ( isKeyGeneratorUsed(actualid) && ! (tx.isPersistent(o) || tx.isReadOnly(o))) {
+              return null;
+          } else {
+!             return actualid;
+          }
+      }
+  
+***************
+*** 3014,3021 ****
+      /**
+       * Return true if a key generator is used for the base type of this ClassMolder
+       */
+!     public boolean isKeyGeneratorUsed() {
+!         return _isKeyGenUsed || (_extends != null && _extends. isKeyGeneratorUsed());
+      }
+  
+      /**
+--- 3018,3032 ----
+      /**
+       * Return true if a key generator is used for the base type of this ClassMolder
+       */
+!     public boolean isKeyGeneratorUsed(Object actualid) {
+!         SQLEngine sqlengine = (SQLEngine) this._persistence;
+!         KeyGenerator keygen = sqlengine.getKeyGen();
+!         boolean isKeyGenUsed = _isKeyGenUsed;
+!         if(null != keygen && keygen instanceof OJTSExtendedKeyGenerator) {
+!             OJTSExtendedKeyGenerator maxorkeep = (OJTSExtendedKeyGenerator) keygen;
+!             isKeyGenUsed = maxorkeep.isKeyGeneratorUsed(actualid);            
+!         }
+!         return isKeyGenUsed || (_extends != null && _extends. isKeyGeneratorUsed(actualid));
+      }
+  
+      /**
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/persist/LockEngine.java castor-0.9.5.3-src/src/main/org/exolab/castor/persist/LockEngine.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/persist/LockEngine.java	2004-02-13 22:08:28.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/persist/LockEngine.java	2005-05-08 22:29:26.000000000 +0200
+***************
+*** 1308,1315 ****
+                      throw new LockNotGrantedException("Lock to be renamed is not own exclusively by transaction!");
+                  if ( entry.isEntered() ) 
+                      throw new LockNotGrantedException("Lock to be renamed is being acquired by another transaction!");
+!                 if ( newentry != null ) 
+!                     throw new LockNotGrantedException("Lock is already existed for the new oid.");
+  
+                  entry = (ObjectLock) locks.remove( orgoid );
+                  entry.setOID( newoid );
+--- 1308,1318 ----
+                      throw new LockNotGrantedException("Lock to be renamed is not own exclusively by transaction!");
+                  if ( entry.isEntered() ) 
+                      throw new LockNotGrantedException("Lock to be renamed is being acquired by another transaction!");
+!                 if ( newentry != null ) { 
+!                     locks.remove( newentry );
+!                     newentry = null;
+!                     //throw new LockNotGrantedException("Lock is already existed for the new oid.");
+!                 }
+  
+                  entry = (ObjectLock) locks.remove( orgoid );
+                  entry.setOID( newoid );
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/persist/spi/OJTSExtendedKeyGenerator.java castor-0.9.5.3-src/src/main/org/exolab/castor/persist/spi/OJTSExtendedKeyGenerator.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/persist/spi/OJTSExtendedKeyGenerator.java	1970-01-01 01:00:00.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/persist/spi/OJTSExtendedKeyGenerator.java	2005-05-22 12:13:14.000000000 +0200
+***************
+*** 0 ****
+--- 1,14 ----
++ /*
++  * Created on 22.05.2005
++  *
++  */
++ package org.exolab.castor.persist.spi;
++ 
++ /**
++  * @author cs
++  *
++  */
++ public interface OJTSExtendedKeyGenerator extends KeyGenerator {
++ 
++     public boolean isKeyGeneratorUsed(Object actualid);
++ }
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/persist/TransactionContext.java castor-0.9.5.3-src/src/main/org/exolab/castor/persist/TransactionContext.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/persist/TransactionContext.java	2004-01-30 20:03:49.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/persist/TransactionContext.java	2005-05-08 21:49:48.000000000 +0200
+***************
+*** 745,750 ****
+--- 745,751 ----
+  
+          OID             oid;
+          Object          identity;
++         Object          initialidentity;
+          ObjectEntry     entry;
+  
+          if ( object == null )
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/xml/IDResolver.java castor-0.9.5.3-src/src/main/org/exolab/castor/xml/IDResolver.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/xml/IDResolver.java	2003-03-03 08:09:09.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/xml/IDResolver.java	2004-11-28 15:40:22.000000000 +0100
+***************
+*** 60,65 ****
+       * @param idref the IDREF to resolve.
+       * @return the Object whose id matches the given IDREF.
+      **/
+!     public Object resolve(String idref);
+      
+  } //-- IDResolver
+--- 60,65 ----
+       * @param idref the IDREF to resolve.
+       * @return the Object whose id matches the given IDREF.
+      **/
+!     public Object resolve(String idref, XMLFieldDescriptor descriptor, Object parent);
+      
+  } //-- IDResolver
+diff -rcNbB -x CVS castor-0.9.5.3-src-orig/src/main/org/exolab/castor/xml/UnmarshalHandler.java castor-0.9.5.3-src/src/main/org/exolab/castor/xml/UnmarshalHandler.java
+*** castor-0.9.5.3-src-orig/src/main/org/exolab/castor/xml/UnmarshalHandler.java	2004-03-08 09:05:39.000000000 +0100
+--- castor-0.9.5.3-src/src/main/org/exolab/castor/xml/UnmarshalHandler.java	2004-11-28 15:40:22.000000000 +0100
+***************
+*** 2868,2874 ****
+      private boolean processIDREF
+          (String idRef, XMLFieldDescriptor descriptor, Object parent)
+      {
+!         Object value = _idResolver.resolve(idRef);
+          if (value == null) {
+              //-- save state to resolve later
+              addReference(idRef, parent, descriptor);
+--- 2868,2874 ----
+      private boolean processIDREF
+          (String idRef, XMLFieldDescriptor descriptor, Object parent)
+      {
+!         Object value = _idResolver.resolve(idRef, descriptor, parent);
+          if (value == null) {
+              //-- save state to resolve later
+              addReference(idRef, parent, descriptor);
+***************
+*** 3430,3436 ****
+           * @param idref the IDREF to resolve.
+           * @return the Object whose id matches the given IDREF.
+          **/
+!         public Object resolve(String idref) {
+  
+              if (_idReferences != null) {
+                  Object obj = _idReferences.get(idref);
+--- 3430,3436 ----
+           * @param idref the IDREF to resolve.
+           * @return the Object whose id matches the given IDREF.
+          **/
+!         public Object resolve(String idref, XMLFieldDescriptor descriptor, Object parent) {
+  
+              if (_idReferences != null) {
+                  Object obj = _idReferences.get(idref);
+***************
+*** 3438,3444 ****
+              }
+  
+              if (_idResolver != null) {
+!                 return _idResolver.resolve(idref);
+              }
+              return null;
+          } //-- resolve
+--- 3438,3444 ----
+              }
+  
+              if (_idResolver != null) {
+!                 return _idResolver.resolve(idref, descriptor, parent);
+              }
+              return null;
+          } //-- resolve

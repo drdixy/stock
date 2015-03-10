@@ -1,0 +1,51 @@
+.headline {
+	FONT: bold 13px/20px Verdana, Arial, Helvetica, sans-serif; COLOR: #336699; TEXT-DECORATION: none
+}
+.link {
+	FONT: 11px/19px Verdana, Arial, Helvetica, sans-serif; COLOR: #ff9900; TEXT-DECORATION: none
+}
+.small {
+	FONT: 11px/19px Verdana, Arial, Helvetica, sans-serif; COLOR: #000000; TEXT-INDENT: 0pt; TEXT-ALIGN: left; TEXT-DECORATION: none
+}
+.small_right {
+	WORD-SPACING: normal; FONT: 10px/19px Verdana, Arial, Helvetica, sans-serif; COLOR: #000000; WHITE-SPACE: normal; LETTER-SPACING: normal; TEXT-ALIGN: left
+}
+.Headline_b {
+	FONT: bold 10px/20px Verdana, Arial, Helvetica, sans-serif; COLOR: #000000; LETTER-SPACING: normal; TEXT-ALIGN: left
+}
+.smallwhite {
+	FONT-SIZE: 10px; WORD-SPACING: normal; COLOR: #ffffff; LINE-HEIGHT: 7px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; WHITE-SPACE: normal; LETTER-SPACING: normal; TEXT-ALIGN: left; TEXT-DECORATION: none
+}
+.headlinewhite {
+	FONT-SIZE: 20px; WORD-SPACING: normal; COLOR: #ffffff; LINE-HEIGHT: 25px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; WHITE-SPACE: normal; LETTER-SPACING: normal; TEXT-ALIGN: center; TEXT-DECORATION: none; FONT-WEIGHT: bolder; 
+}
+.small_Fett {
+	FONT: bold 11px/19px Verdana, Arial, Helvetica, sans-serif; COLOR: #000000; TEXT-INDENT: 0pt; TEXT-ALIGN: left
+}
+.link_Fett {
+	FONT: bold 11px/19px Verdana, Arial, Helvetica, sans-serif; COLOR: #ff9900; TEXT-DECORATION: none
+}
+.formular {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 10px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; FONT-STYLE: normal; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.tbhead {
+	FONT-WEIGHT: bolder; FONT-SIZE: 14px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.tbrow {
+	FONT-SIZE: 12px; LINE-HEIGHT: 130%; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.navigation {
+	FONT-WEIGHT: normal; FONT-SIZE: 10px; COLOR: #ffffff; FONT-STYLE: normal; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-VARIANT: normal; TEXT-DECORATION: none
+}
+.table {
+	TEXT-INDENT: 0pt; TEXT-ALIGN: left
+}
+.smallital {
+	FONT: italic 11px/19px Verdana, Arial, Helvetica, sans-serif; COLOR: #000000; TEXT-INDENT: 0pt; TEXT-ALIGN: left; TEXT-DECORATION: none
+}
+.white {
+	FONT: 11px/19px Verdana, Arial, Helvetica, sans-serif; COLOR: #ffffff; TEXT-INDENT: 0pt; TEXT-ALIGN: left; TEXT-DECORATION: none
+}
+.smallwhitens {
+	FONT-SIZE: 10px; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}

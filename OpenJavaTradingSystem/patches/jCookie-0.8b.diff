@@ -1,0 +1,125 @@
+diff -rcNbB -x CVS jCookie-0.8b-orig/build.xml jCookie-0.8b/build.xml
+*** jCookie-0.8b-orig/build.xml	1970-01-01 01:00:00.000000000 +0100
+--- jCookie-0.8b/build.xml	2005-05-31 19:12:08.000000000 +0200
+***************
+*** 0 ****
+--- 1,44 ----
++ <project name="jCookie-0.8b"  default="all" basedir=".">
++ 
++ 	<property name="src-dir"      location="src" />
++ 	<property name="bin-dir"      location="bin" />
++ 	<property name="lib-dir"      location="lib" />
++ 	<property name="jar"          location="jCookie.jar" />
++ 
++ 	<path id="classpath">
++ 	  <pathelement path="${bin-dir}"/>
++ 	  <fileset dir="${lib-dir}"> 
++ 	    <include name="*.jar"/>
++ 	  </fileset>
++ 	</path> 
++ 
++ 	<target name="compile">
++ 	  <mkdir dir="${bin-dir}"/>
++ 	  <mkdir dir="${lib-dir}"/>
++ 	  <javac srcdir="${src-dir}" destdir="${bin-dir}" classpathref="classpath" debug="on" source="1.4" target="1.4"/>
++ 	</target>
++ 	<target name="clean-compile">
++ 		<delete>
++ 			<fileset dir="${bin-dir}" includes="**/*.class" />
++ 		</delete>
++ 	</target>
++ 
++ 	<target name="jar" depends="compile">
++ 		<!-- <jar destfile="${jar}" basedir="${bin-dir}" manifest="${manifest}"/> -->
++ 		<jar destfile="${jar}" basedir="${bin-dir}">
++ 			<manifest>
++ 				<attribute name="Built-By"   value="${user.name}"/>
++ 				<attribute name="Main-Class" value="Main"/>
++ 				<!-- <attribute name="Class-Path" value=""/> -->
++ 			</manifest>
++ 		</jar>
++ 	</target>
++ 	<target name="clean-jar">
++ 		<delete file="${jar}" />
++ 	</target>
++ 
++ 	<target name="all" depends="jar"/>
++ 
++ 	<target name="clean" depends="clean-compile,clean-jar">
++ 	</target>
++ </project>
+diff -rcNbB -x CVS jCookie-0.8b-orig/.classpath jCookie-0.8b/.classpath
+*** jCookie-0.8b-orig/.classpath	1970-01-01 01:00:00.000000000 +0100
+--- jCookie-0.8b/.classpath	2005-05-31 19:12:08.000000000 +0200
+***************
+*** 0 ****
+--- 1,6 ----
++ <?xml version="1.0" encoding="UTF-8"?>
++ <classpath>
++ 	<classpathentry kind="src" path="src"/>
++ 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
++ 	<classpathentry kind="output" path="bin"/>
++ </classpath>
+diff -rcNbB -x CVS jCookie-0.8b-orig/.project jCookie-0.8b/.project
+*** jCookie-0.8b-orig/.project	1970-01-01 01:00:00.000000000 +0100
+--- jCookie-0.8b/.project	2005-05-31 19:12:08.000000000 +0200
+***************
+*** 0 ****
+--- 1,17 ----
++ <?xml version="1.0" encoding="UTF-8"?>
++ <projectDescription>
++ 	<name>jCookie-0.8b</name>
++ 	<comment></comment>
++ 	<projects>
++ 	</projects>
++ 	<buildSpec>
++ 		<buildCommand>
++ 			<name>org.eclipse.jdt.core.javabuilder</name>
++ 			<arguments>
++ 			</arguments>
++ 		</buildCommand>
++ 	</buildSpec>
++ 	<natures>
++ 		<nature>org.eclipse.jdt.core.javanature</nature>
++ 	</natures>
++ </projectDescription>
+diff -rcNbB -x CVS jCookie-0.8b-orig/src/com/sonalb/net/http/cookie/RFC2965CookieParser.java jCookie-0.8b/src/com/sonalb/net/http/cookie/RFC2965CookieParser.java
+*** jCookie-0.8b-orig/src/com/sonalb/net/http/cookie/RFC2965CookieParser.java	2002-03-04 16:17:44.000000000 +0100
+--- jCookie-0.8b/src/com/sonalb/net/http/cookie/RFC2965CookieParser.java	2005-05-31 19:14:34.000000000 +0200
+***************
+*** 323,329 ****
+  			return(host.toLowerCase().endsWith(domain.toLowerCase()));
+  		}
+  
+! 		String specialTLDs[] = { "com","edu","net","org","gov","mil","int" };
+  		int dots = countTheDots(domain);
+  		String tld = domain.substring(domain.lastIndexOf('.')+1);
+  
+--- 323,329 ----
+  			return(host.toLowerCase().endsWith(domain.toLowerCase()));
+  		}
+  
+!  		String specialTLDs[] = { "com", "net", "org", "info", "biz", "aero", "coop", "museum", "name", "pro", "gov", "edu", "mil", "int", "ac", "ad", "ae", "ag", "am", "as", "au", "bb", "be", "bg", "bi", "bm", "bt", "bv", "ca", "cc", "cd", "ch", "ck", "cl", "cm", "cn", "cr", "cu", "cx", "cz", "de", "dk", "do", "ec", "ee", "es", "fj", "fm", "fo", "fr", "gb", "ge", "gi", "gl", "gm", "gr", "gs", "gt", "gu", "hk", "hm", "hr", "hu", "id", "ir", "ie", "il", "in", "io", "is", "it", "jo", "jp", "kr", "ky", "kz", "lb", "li", "lk", "lt", "lu", "ly", "mc", "mn", "ms", "mw", "mx", "na", "nc", "nl", "no", "nu", "nz", "pe", "ph", "pk", "pl", "pm", "py", "re", "ro", "ru", "sa", "se", "sg", "sh", "si", "sk", "sm", "su", "tc", "tf", "th", "tj", "to", "tr", "tv", "tw", "ua", "ug", "uk", "us", "uy", "uz", "va", "vc", "vg", "vi", "vn", "vu", "wf", "ws", "za" };
+  		int dots = countTheDots(domain);
+  		String tld = domain.substring(domain.lastIndexOf('.')+1);
+  
+diff -rcNbB -x CVS jCookie-0.8b-orig/src/com/sonalb/Utils.java jCookie-0.8b/src/com/sonalb/Utils.java
+*** jCookie-0.8b-orig/src/com/sonalb/Utils.java	2002-03-02 15:49:48.000000000 +0100
+--- jCookie-0.8b/src/com/sonalb/Utils.java	2005-05-31 19:15:34.000000000 +0200
+***************
+*** 404,410 ****
+  			return(null);
+  		}
+  
+! 		SimpleDateFormat sdf = new SimpleDateFormat(format);
+  		sdf.setTimeZone(new SimpleTimeZone(0,"GMT"));
+  		Date d = sdf.parse(date, new ParsePosition(0));
+  
+--- 404,410 ----
+  			return(null);
+  		}
+  
+!  		SimpleDateFormat sdf = new SimpleDateFormat(format, new Locale(""));
+  		sdf.setTimeZone(new SimpleTimeZone(0,"GMT"));
+  		Date d = sdf.parse(date, new ParsePosition(0));
+  

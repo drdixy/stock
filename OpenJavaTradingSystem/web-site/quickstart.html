@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<TITLE>Quickstart for the Open Java Trading System</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<LINK href="ns.css" type=text/css rel=stylesheet>
+</head>
+<BODY text=#000000 vLink=#000000 aLink=#000000 link=#000000 bgColor=#ffffff leftMargin=0 topMargin=0 marginwidth="0">
+<LINK href="ie.css" type=text/css rel=stylesheet>
+<TABLE cellSpacing=0 cellPadding=0 width=759 height=50 align=center border=0>
+  <TBODY>
+  <TR><TD class=headlinewhite vAlign=center align=center colspan=2 align=middle bgColor=#000000 height=50>Quickstart for the Open Java Trading System</TD>
+  </TR>
+  <TR>
+    <TD vAlign=top align=left>&nbsp;</TD>
+    <TD vAlign=top align=left width=160 bgColor=#f8f8f8 rowSpan=2 nowrap>
+    <P>
+    <SPAN class=small_Fett><BR>Quick Links<BR></SPAN>
+    </TD>
+  </TR>
+  <TR>
+    <TD vAlign=top align=left>
+    <P>
+    <SPAN class=small_Fett>Q u i c k s t a r t</SPAN>
+    <SPAN class=headline><BR>The fast lane</SPAN><BR>
+    <SPAN class=small>
+
+      <A class=link target="_blank" href="http://sourceforge.net/project/showfiles.php?group_id=116121">Download</A>
+      the binary distribution of the OpenJavaTradingSystem and unpack it. Then simply follow these steps:
+	  <PRE>
+tar -xzvf OpenJavaTradingSystem-bin-0.10.tar.gz
+cd OpenJavaTradingSystem-bin-0.10
+chmod u+x sisc.sh
+./sisc.sh
+(current-directory (getenv "sisc.home")) (load "sisc/functionality.scm") (ojts:init)
+(ojts:read-xml-configuration "testread.xml")
+(ojts:get-data-for-equity "yahoo-csv" "2004-06-01" "2004-07-01" "DE0007500001" "XETRA" *TRADING-DAY-VOLUME*)
+(ojts:display-chart
+ (ojts:create-candlestick-chart-for-equity "yahoo-csv" "2004-06-01" "2004-07-01" "DE0007500001" "XETRA"))
+(exit)
+	  </PRE>
+<A target="_blank" HREF="doc/general/graphics/ojts-candlestick-chart.png"><DIV ALIGN=center><IMG SRC="doc/general/ojts001.png">
+<A target="_blank" HREF="doc/general/graphics/emacs-ilisp-sisc.png"><IMG SRC="doc/general/ojts002.png">
+    </SPAN>
+    </P>
+
+    </TD>
+  </TR>
+<TR>
+  <TD vAlign=center align=middle bgColor=#000000 colSpan=2 height=27>
+  <DIV class=smallwhite align=left>
+  Copyright ©2004 Christian Schuhegger, Manuel Gonzalez Berges 
+  <A class=smallwhite href="index.html">
+  &gt;&gt; Start Page </A>
+  <A class=smallwhite href="imprint.html">
+  &gt;&gt; Imprint </A>
+  <A class=smallwhite href="mailto:cs224 at users dot sourceforge dot net">
+  &gt;&gt; Webmaster
+  </A>
+  </DIV>
+  </TD>
+</TR>
+<TR>
+  <TD vAlign=center align=middle bgColor=#000000 colSpan=2 height=27>
+  <DIV class=smallwhite align=left>
+<!-- hhmts start -->Last modified: Sat Dec  4 16:13:59 CET 2004 <!-- hhmts end -->
+  </DIV>
+  </TD>
+</TR>
+</TBODY>
+</TABLE>
+</BODY>
+</HTML>

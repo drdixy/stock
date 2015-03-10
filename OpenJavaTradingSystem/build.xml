@@ -1,0 +1,298 @@
+<project name="OpenJavaTradingSystem"  default="all" basedir=".">
+
+  <property name="src-dir"      location="src" />
+  <property name="bin-dir"      location="bin" />
+  <property name="jrat-bin-dir" location="jrat-bin" />
+  <property name="lib-dir"      location="lib" />
+  <property name="jrat-lib-dir" location="jrat-lib" />
+  <property name="data-dir"     location="data" />
+  <property name="jar"          location="ojts.jar" />
+  <property name="db-name"      value   ="jts" />
+  <property name="db-location"  location="${data-dir}/${db-name}" />
+  <property name="db-schema"    location="sql/db-schema.sql" />
+  <property name="mapping-file" location="castor/mapping.xml" />
+  <property name="dbtype"       value="hsql"/>
+
+  <property name="main-class"   value="StartJ"/>
+
+  <property name="dist-src-dir"      location="dist-src" />
+  <property name="dist-bin-dir"      location="dist-bin" />
+  <property name="dist-version"      value="0013" />
+  <property name="dist-version-name" value="0.13" />
+
+  <property name="one-jar-base-dir"   location="one-jar-base" />
+  <property name="one-jar-dir"        location="one-jar" />
+  <property name="one-jar-boot-class" value="com.simontuffs.onejar.Boot"/>
+
+  <path id="classpath">
+    <fileset dir="${lib-dir}">
+      <include name="*.jar"/>
+    </fileset>
+    <pathelement location="castor/"/>
+  </path>
+
+  <target name="jfcdemo">
+    <java classname="org.jfree.chart.demo.JFreeChartDemo" classpathref="classpath" fork="true" spawn="true">
+    </java>
+  </target>
+
+  <target name="dbmanager">
+    <java classname="org.hsqldb.util.DatabaseManager" classpathref="classpath" fork="true" spawn="true">
+      <arg value="-url"/>
+      <arg value="jdbc:hsqldb:hsql://localhost/${db-name}"/>
+    </java>
+  </target>
+
+  <target name="dbserver">
+    <java classname="org.hsqldb.Server" classpathref="classpath">
+      <arg value="-database.0"/>
+      <arg value="${db-location}"/>
+      <arg value="-dbname.0"/>
+      <arg value="${db-name}"/>
+    </java>
+  </target>
+  
+  <target name="compile">
+    <tstamp/>
+    <mkdir dir="${bin-dir}"/>
+    <javac srcdir="${src-dir}" destdir="${bin-dir}" classpathref="classpath" debug="on" source="1.4" target="1.4"/>
+  </target>
+  <target name="clean-compile">
+    <delete>
+      <fileset dir="${bin-dir}" includes="**/*.class" />
+    </delete>
+  </target>
+
+  <!--                          docletpath="lib/jdom.jar;lib/castor-doclet.jar;" -->
+  
+  <target name="mapping" depends="compile">
+    <javadoc packagenames="net.sf.ojts.jdo.*"
+	     sourcepath="${src-dir}"
+	     private="true"
+	     doclet="org.castor.doclet.ddl.DDL"
+	     docletpath="lib/jdom.jar;lib/castor-doclet.jar;"
+	     additionalparam=" -J-DFILE=${db-schema}  -J-DDB_TYPE=${dbtype} -J-DLOG=1">
+      <classpath refid="classpath"/>
+    </javadoc>
+    <javadoc packagenames="net.sf.ojts.jdo.*"
+	     sourcepath="${src-dir}"
+	     private="true"
+	     doclet="org.castor.doclet.jdo.JDO"
+	     docletpath="lib/jdom.jar;lib/castor-doclet.jar;"
+	     additionalparam="-J-DFILE=${mapping-file} -J-DLOG=1">
+      <classpath refid="classpath"/>
+    </javadoc>
+  </target>
+
+  <target name="dbcreate" depends="mapping"><!-- depends="mapping" -->
+    <delete>
+      <fileset dir="${data-dir}" includes="${db-name}.*"/>
+    </delete>
+    <java classname="org.hsqldb.util.ScriptTool" classpathref="classpath" fork="true">
+      <arg value="-url"/>
+      <arg value="jdbc:hsqldb:file:"/>
+      <arg value="-database"/>
+      <arg value="${db-location}"/>
+      <arg value="-log"/>
+      <arg value="true"/>
+      <arg value="-script"/>
+      <arg value="${db-schema}"/>
+    </java>
+  </target>
+  
+  <!--
+      <target name="createdb" depends="mapping">
+      <sql driver="${dbDriver}" url="${dbURL}" userid="${dbUser}" password="${dbPassword}" onerror="continue" src="${DDLFile}">
+      <classpath refid="classpath"/>
+      </sql>
+      </target>
+  -->
+
+
+  <taskdef name="manifestclasspath" classname="org.apache.hivemind.ant.ManifestClassPath">	
+    <classpath>
+      <pathelement location="antlib/hivemind-1.0.jar"/>
+    </classpath>
+  </taskdef>
+
+  <manifestclasspath directory="./" property="manifest.class.path">
+    <classpath refid="classpath"/>
+  </manifestclasspath>
+
+  <target name="jar" depends="compile">
+    <copy todir="${bin-dir}">
+      <fileset dir="${basedir}/castor">
+        <include name="castor.properties"/>
+      </fileset>
+    </copy>
+    <jar destfile="${jar}" basedir="${bin-dir}">
+      <manifest>
+	<attribute name="Built-By"   value="${user.name}"/>
+      	<attribute name="Main-Class" value="${main-class}"/>
+      	<attribute name="Class-Path" value="${manifest.class.path}"/>
+      </manifest>
+    </jar>
+  </target>
+  <target name="clean-jar">
+    <delete file="${jar}" />
+  </target>
+
+  <target name="configimport" depends="jar">
+    <java classname="CastorReadXMLTest" classpath="${jar}" classpathref="classpath" fork="true"/>
+  </target>
+  
+  <target name="run" depends="configimport">
+    <java classname="YahooCSVDataInputHandlerTest" classpath="${jar}" classpathref="classpath" fork="true"/>
+  </target>
+
+  <target name="all" depends="jar"/>
+
+  <target name="clean" depends="clean-compile,clean-jar">
+  </target>
+
+  <target name="dist-src">
+    <delete dir="${dist-src-dir}"/>
+    <mkdir dir="${dist-src-dir}"/>
+    <!--
+    <cvspass cvsroot=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/ojts" password=""/>
+    use the cvsRoot parameter like here to have anonymous cvs access
+    cvsRoot=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/ojts"
+	 -->
+    <cvs dest="${dist-src-dir}" >
+      <commandline>
+	<argument value="-q"/>
+	<argument value="export"/>
+	<argument value="-r"/> -->
+	<argument value="TAG_${dist-version}"/>
+	<!-- <argument value="-D"/> -->
+	<!-- <argument value="NOW"/> -->
+	<argument value="-d"/>
+	<argument value="${ant.project.name}-src-${dist-version-name}"/>
+	<argument value="OpenJavaTradingSystem"/>
+      </commandline>
+    </cvs>
+    <!--
+    use the cvsRoot parameter like here to have anonymous cvs access
+    cvsRoot=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/ojts"
+	 -->
+    <cvs dest="${dist-src-dir}/${ant.project.name}-src-${dist-version-name}/">
+      <commandline>
+	<argument line="export -DNOW project-workspace"/>
+      </commandline>    
+    </cvs>
+    <tar tarfile="${ant.project.name}-src-${dist-version-name}.tar.gz" longfile="gnu" compression="gzip">
+      <tarfileset dir="${dist-src-dir}/${ant.project.name}-src-${dist-version-name}" prefix="${ant.project.name}-src-${dist-version-name}"/>
+    </tar>
+  </target>
+
+  <target name="dist-bin-base" depends="jar,dbcreate">
+    <delete dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}"/>
+    <mkdir dir="${dist-bin-dir}"/>
+    <mkdir dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}"/>
+    <mkdir dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/castor"/>
+    <mkdir dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/conf"/>
+    <mkdir dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/data"/>
+    <mkdir dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/data/cache"/>
+    <mkdir dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/doc"/>
+    <mkdir dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/logs"/>
+    <copy todir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}">
+      <fileset dir="${basedir}">
+        <include name="AUTHORS"/>
+        <include name="ChangeLog"/>
+        <include name="COPYING"/>
+        <include name="lgpl.txt"/>
+        <include name="NEWS"/>
+        <include name="README"/>
+        <include name="testread.xml"/>
+	<include name="ojts.sh"/>
+      </fileset>
+    </copy>
+    <chmod file="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/ojts.sh" perm="ugo+rx"/>
+    <copy todir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/castor">
+      <fileset dir="${basedir}/castor">
+	<include name="**/*.xml"/>
+	<exclude name="database.xml"/>
+      </fileset>
+      <fileset dir="${dist-bin-dir}">
+        <include name="database.xml"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/conf">
+      <fileset dir="${basedir}/conf">
+	<include name="**/*.properties"/>
+	<exclude name="jts.properties"/>
+      </fileset>
+      <fileset dir="${dist-bin-dir}">
+        <include name="jts.properties"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/data">
+      <fileset dir="${basedir}/data">
+	<include name="jts.log"/>
+	<include name="jts.properties"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/doc">
+      <fileset dir="${basedir}/doc">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    <!--
+    <cvspass cvsroot=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/ojts" password=""/>
+    use the cvsRoot parameter like here to have anonymous cvs access
+    cvsRoot=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/ojts"
+	 -->
+    <cvs dest="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}">
+      <commandline>
+	<argument line="export -DNOW project-workspace"/>
+      </commandline>    
+    </cvs>
+  </target>
+
+  <target name="dist-bin" depends="dist-bin-base">
+    <copy todir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}">
+      <fileset dir="${basedir}">
+        <include name="ojts.jar"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}/lib">
+      <fileset dir="${basedir}/lib">
+	<include name="*.jar"/>
+      </fileset>
+    </copy>    
+    <tar tarfile="${ant.project.name}-bin-${dist-version-name}.tar.gz" longfile="gnu" compression="gzip">
+      <tarfileset dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}" prefix="${ant.project.name}-bin-${dist-version-name}"/>
+    </tar>
+  </target>
+
+  <target name="one-jar" depends="jar">
+    <delete dir="${one-jar-dir}"/>
+    <mkdir dir="${one-jar-dir}"/>
+    <mkdir dir="${one-jar-dir}/main"/>
+    <mkdir dir="${one-jar-dir}/lib"/>
+    <copy todir="${one-jar-dir}">
+      <fileset dir="${one-jar-base-dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    <copy file="${jar}" todir="${one-jar-dir}/main"/>
+    <copy todir="${one-jar-dir}/lib">
+      <fileset dir="${lib-dir}">
+        <include name="**/*.*"/>
+      </fileset>
+    </copy>
+    <jar destfile="${ant.project.name}-${dist-version-name}.jar" basedir="${one-jar-dir}" manifest="${one-jar-dir}/boot-manifest.mf"/><!-- ${DSTAMP} -->
+  </target>
+
+  <target name="dist-one-jar" depends="one-jar,dist-bin-base">
+    <copy todir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}">
+      <fileset dir="${basedir}">
+        <include name="${ant.project.name}-${dist-version-name}.jar"/>
+      </fileset>
+    </copy>
+    <tar tarfile="${ant.project.name}-bin-${dist-version-name}.tar.gz" longfile="gnu" compression="gzip">
+      <tarfileset dir="${dist-bin-dir}/${ant.project.name}-bin-${dist-version-name}" prefix="${ant.project.name}-bin-${dist-version-name}"/>
+    </tar>
+  </target>
+
+</project>
